@@ -4,7 +4,7 @@ const cors = require("cors");
 const userRouter = require("./Routes/user.router");
 const meetingRouter = require("./Routes/meeting.router");
 const accountRouter = require("./Routes/account.router");
-const authMiddleware = require("./middleware/middleware");
+const authMiddleware = require("./MiddleWare/middleware");
 const port = process.env.PORT || 3000;
 
 app.use(cors());
