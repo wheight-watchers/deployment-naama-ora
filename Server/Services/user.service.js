@@ -1,13 +1,13 @@
 const fs = require("fs/promises");
-// const dataFromFile=fs.readFileSync('../file.json');
+// const dataFromFile=fs.readFileSync('deployment-racheli-naama-ora/file.json');
 // myData=JSON.parse(dataFromFile);
 // let users_count = 4;
 const uuid = require("uuid");
 const uuIdv4 = uuid.v4;
 
-const getData = async () => fs.readFile("/deployment-racheli-naama-ora/file.json").then((data) => JSON.parse(data));
+const getData = async () => fs.readFile("deployment-racheli-naama-ora/file.json").then((data) => JSON.parse(data));
 
-const updateData = async (data) => fs.writeFile("/deployment-racheli-naama-ora/file.json", JSON.stringify(data));
+const updateData = async (data) => fs.writeFile("deployment-racheli-naama-ora/file.json", JSON.stringify(data));
 
 const addUser = async (user) => {
   if (!user.firstName || !user.lastName || !user.id || !user.email) {

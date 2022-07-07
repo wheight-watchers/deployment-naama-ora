@@ -6,9 +6,9 @@ const fs = require("fs");
 // myData = JSON.parse(dataFromFile);
 
 const getData = async () =>
-  fs.readFile("/deployment-racheli-naama-ora/file.json").then((data) => JSON.parse(data));
+  fs.readFile("deployment-racheli-naama-ora/file.json").then((data) => JSON.parse(data));
 const updateData = async (data) =>
-  fs.writeFile("/deployment-racheli-naama-ora/file.json", JSON.stringify(data));
+  fs.writeFile("deployment-racheli-naama-ora/file.json", JSON.stringify(data));
 
 const login = async (email, password) => {
   const data = await getData();
