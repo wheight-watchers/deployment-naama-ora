@@ -53,12 +53,17 @@ const deleteUser = async (id) => {
   // return myData.users.filter((user)=>user.id!==id);
 };
 const updateUser = async (id, newUser) => {
-  const data = await getData();
-  let users = data.users;
-  const _user = await users.find((user) => user.id === parseInt(id));
-  Object.assign(_user, newUser);
-  await updateData(data);
-  return data;
+  const d = await deleteUser(id);
+  const data = await addUser(newUser);
+  return data
+
+  // const data = await getData();
+  // let users = data.users;
+  // const _user = await users.find((user) => user.id === parseInt(id));
+  // Object.assign(_user, newUser);
+  // await updateData(data);
+  // return data;
+
   // const mappedData = myData.map((user)=>{
   //    return user.id===id?newUser:user
   // })
