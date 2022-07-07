@@ -1,30 +1,33 @@
 const fs = require('fs')
-const getData = async () => fs.readFile("Server/file.json").then(data => JSON.parse(data.users));
+const getData = async () => fs.readFile("Server/file.json").then(data => JSON.parse(data));
 const updateData = async (data) => fs.writeFile("Server/file.json", JSON.stringify(data));
 
 async function getDiary(userId) {
    const data = await getData();
-   const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } })
-   if (!dataForThisUser) {
+   const users=data.users;
+   const user = await users.forEach((user) => user.id === intParse(userId) )
+   if (!user) {
       throw new Error('this user is not Exists');
    }
-
-   return dataForThisUser.diary;
-}
+   return user.diary;
+} 
 
 async function addDiary(userId, diary) {
    if (!userId || diary) {
       throw new Error('must get user id and diary...');
    }
    const data = (await getData()) || [];
-   const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } })
-   const _diary = dataForThisUser.diary
-   const exist = await _diary.find((_d) => { _d.date === date });
+   const users=data.users;
+   const user = await users.forEach((user) => user.id === intParse(userId) )
+   // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } })
+   const _diary = user.diary
+   const exist = await _diary.find((_d) => { _d.date === diary.date });
    if (exist) {
-      throw new Error('Has been updated on this date:) ');
+      throw new Error('Has been already updated on this date:) ');
    }
-   _diary = [..._diary, diary];
-   await updateData(_diary);
+   // _diary = [..._diary, diary];
+   Object.assign(_diary, [..._diary,diary]);
+   await updateData(data);
    return _diary;
 
 }
@@ -34,13 +37,15 @@ async function updateDiary(userId, dairyId, diary) {
    if (!data) {
       throw new Error('not found user to update..');
    }
-   const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } });
-   const _diary = dataForThisUser.diary;
-   const specificDiary = await _diary.find((d) => { d.dairyId === dairyId })
+   const users=data.users;
+   const user = await users.forEach((user) => user.id === intParse(userId) )
+   // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } });
+   const _diary = user.diary;
+   const specificDiary = await _diary.find((d) => { d.dairyId === parseInt(dairyId) })
    if (!specificDiary) {
       throw new Error('not found specific diary');
    }
-   Object.assign(data, diary);
+   Object.assign(specificDiary, diary);
    await updateData(data);
    return data;
 
