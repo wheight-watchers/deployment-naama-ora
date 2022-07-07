@@ -3,8 +3,8 @@ const uuid = require('uuid');
 const uuIdv4 = uuid.v4;
 
 
-const getData = async () => fs.readFile('src/file.json').then(data => JSON.parse(data));
-const updateData = async (data) => fs.writeFile('src/file.json', JSON.stringify(data));
+const getData = async () => fs.readFile("/deployment-racheli-naama-ora/file.json").then(data => JSON.parse(data));
+const updateData = async (data) => fs.writeFile("/deployment-racheli-naama-ora/file.json", JSON.stringify(data));
 
 const addMeeting = async(businessId, startTime, duration, meeting) => {
 
