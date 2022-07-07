@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\Server\\app.js"
+            "program": "${workspaceFolder}\\deployment-racheli-naama-ora\\Server\\app.js"
         }
     ]
 }
