@@ -1,10 +1,10 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const userRouter = require("./src/Server/Routes/user.router");
-const meetingRouter = require("./src/Server/Routes/meeting.router");
-const accountRouter = require("./src/Server/Routes/account.router");
-const authMiddleware = require('./src/Server/middleware/middleware');
+const userRouter = require("./Server/Routes/user.router");
+const meetingRouter = require("./Server/Routes/meeting.router");
+const accountRouter = require("./Server/Routes/account.router");
+const authMiddleware = require('./Server/middleware/middleware');
 const port = 
 process.env.port ||
  3000;

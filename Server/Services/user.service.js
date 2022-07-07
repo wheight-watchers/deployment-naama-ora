@@ -5,7 +5,7 @@ const fs = require("fs/promises");
 const uuid = require("uuid");
 const uuIdv4 = uuid.v4;
 
-const getData = async () => fs.readFile("src/file.json").then((data) => JSON.parse(data));
+const getData = async () => fs.readFile("/deployment-naama-ora/file.json").then((data) => JSON.parse(data));
 
 const updateData = async (data) => fs.writeFile("src/file.json", JSON.stringify(data));
 
