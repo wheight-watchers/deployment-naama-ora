@@ -4,10 +4,10 @@ const uuIdv4 = uuid.v4;
 
 const getData = async () =>
   fs
-    .readFile("deployment-racheli-naama-ora/Server/file.json")
+    .readFile("Server/file.json")
     .then((data) => JSON.parse(data));
 const updateData = async (data) =>
-  fs.writeFile("deployment-racheli-naama-ora/Server/file.json", JSON.stringify(data));
+  fs.writeFile("Server/file.json", JSON.stringify(data));
 
 const addMeeting = async (businessId, startTime, duration, meeting) => {
   const id = uuIdv4();

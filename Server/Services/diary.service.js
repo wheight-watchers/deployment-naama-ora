@@ -1,6 +1,6 @@
 const fs = require('fs')
-const getData = async () => fs.readFile("deployment-racheli-naama-ora/server/file.json").then(data => JSON.parse(data.users));
-const updateData = async (data) => fs.writeFile("deployment-racheli-naama-ora/Server/file.json", JSON.stringify(data));
+const getData = async () => fs.readFile("Server/file.json").then(data => JSON.parse(data.users));
+const updateData = async (data) => fs.writeFile("Server/file.json", JSON.stringify(data));
 
 async function getDiary(userId) {
    const data = await getData();
