@@ -19,12 +19,26 @@ module.exports = {
       i = i + 1
       Object.assign(data.users, _user);
     })
-  
+
+    await updateData(data);
+    return data;
+  },
+  deleteMeeting: async (id) => {
+    const data = await getData();
+    let i=0
+    await data.users.forEach(user => {
+      i=0;
+       user.Weights.meetings.forEach(m=>{
+        if(m.id===parseInt(id)){
+          user.Weights.meetings.splice(i,1)
+        }
+        i=i+1
+      })
+    })
+   
     await updateData(data);
     return data;
   }
-
-
 }
 
 
