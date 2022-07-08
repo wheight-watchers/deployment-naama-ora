@@ -1,5 +1,6 @@
 const express= require('express');
 const controller=require('../Controllers/diary.controller')
+
 const router=express.Router();
 
 router.get('/:id/diary',controller.getDiaryByUserId);
