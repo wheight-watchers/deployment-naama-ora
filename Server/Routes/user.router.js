@@ -14,7 +14,7 @@ router.put('/:id',controller.updateUserDetails);
 router.delete('/:id',controller.removeUser);
 router.get('/:id/diary',diaryController.getDiaryByUserId);
 router.post('/:id/diary',diaryController.addDiary);
-router.put('/:id/diary/:id',diaryController.updateDiary);
+router.put('/:id/diary',diaryController.updateDiary);
 router.delete('/:id/diary',diaryController.deleteDairy);
 
 module.exports=router; 

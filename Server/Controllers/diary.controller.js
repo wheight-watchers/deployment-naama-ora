@@ -23,11 +23,11 @@ module.exports.addDiary=async function(req,res,next){
 }
 module.exports.updateDiary=async function(req,res,next){
     try{
-        const {userId}=req.params;
-        const{date,summary}=req.body;
-        const{dairyId}=req.query;
-        const updateDairy=await dairyService.updateDiary(userId,dairyId,date,summary);
-        res.send(updateDairy)
+        const userId=req.params.id;
+        const diaryDate=req.query.date;
+        const newDiary=req.body;
+        const updateDairy=await dairyService.updateDiary(userId,diaryDate,newDiary);
+        res.status(200).send(updateDairy)
     }
     catch(error){
         next(error)
@@ -38,7 +38,7 @@ module.exports.deleteDairy=async function(req,res,next){
         const userId=req.params.id;
         const dairy=req.query.date;
         const updateDairy=await dairyService.deleteDairy(userId,dairy);
-        res.send(updateDairy)
+        res.status(200).send(updateDairy)
     }
     catch(error){
         next(error)

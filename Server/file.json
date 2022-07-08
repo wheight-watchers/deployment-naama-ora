@@ -45,15 +45,6 @@
             { "Dinner": ["baget", "salad", "omlete"] },
             { "IntermediateSnack": ["coffee", "chocolate", "cookies"] }
           ]
-        },
-        {
-          "date": "14/04/2020",
-          "summary": [
-            { "Breakfast": ["roll", "chocolate-milk"] },
-            { "Lunch": ["rice", "meet", "beans"] },
-            { "Dinner": ["baget", "salad", "omlete"] },
-            { "IntermediateSnack": ["coffee", "chocolate", "cookies"] }
-          ]
         }
       ]
     },

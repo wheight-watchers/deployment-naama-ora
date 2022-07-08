@@ -44,22 +44,27 @@ async function addDiary(userId, diary) {
   return _diary;
 }
 
-async function updateDiary(userId, dairyId, diary) {
+async function updateDiary(userId,diaryDate,newDiary) {
+   console.log("in update diary: ")
+   console.log("userId: "+userId+" diaryDate: "+diaryDate)
   let data = await getData();
   if (!data) {
-    throw new Error("not found user to update..");
+    throw new Error("have not found users");
   }
-  const users = data.users;
-  let user = await users.find((user) => user.id === parseInt(userId));
-  // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } });
-  let _diary = user.diary;
-  let specificDiary = await _diary.find((d) => {
-    d.dairyId === parseInt(dairyId);
+  let users = data.users;
+  let user = await users.find((user) => user.id == parseInt(userId));
+  if(!user){
+     throw new Error("user was not found")
+  }
+  let _diary = await user.diary;
+  console.log("user diary:"+JSON.stringify(_diary));
+  let specificDiary = await user.diary.find((item) => {
+   item.date == diaryDate;
   });
   if (!specificDiary) {
-    throw new Error("not found specific diary");
+    throw new Error(`not found specific diary with date ${diaryDate}`);
   }
-  Object.assign(specificDiary, diary);
+  Object.assign(specificDiary, newDiary);
   await updateData(data);
   return data;
 }
