@@ -38,7 +38,8 @@ async function addDiary(userId, diary) {
     throw new Error("Has been already updated on this date:) ");
   }
   _diary = [..._diary, diary];
-//   Object.assign(_diary, [..._diary, diary]);
+  user.diary=_diary;
+   // Object.assign(_diary, [..._diary, diary]);
   await updateData(data);
   return _diary;
 }
@@ -62,34 +63,31 @@ async function updateDiary(userId, dairyId, diary) {
   await updateData(data);
   return data;
 }
-async function deleteDairy(userId, dairyId) {
-  const users = await getData();
+async function deleteDairy(userId, dairyDate) {
+  let data = await getData();
+  const users=data.users;
   // if (!data) {
   //    throw new Error('not found user to delete..');
   // }
   // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } });
-  const indexOfThisUser = await users.findIndex((u) => u.id === userId);
-  if (!indexOfThisUser) {
+  const indexOfThisUser = await users.findIndex((u) => u.id === parseInt(userId));
+  if (indexOfThisUser===-1) {
     throw new Error("not found user to delete..");
   }
-  // const _diary = dataForThisUser.diary;
-  const userDiary = users[indexOfThisUser].diary;
-  // const indexOfUsersDiary = await _diary.findIndex((d) => { d.dairyId === dairyId })
+  let userDiary = users[indexOfThisUser].diary;
   if (!userDiary) {
-    // if (!indexOfUsersDiary) {
-    throw new Error("not found this diary");
+    throw new Error("not found user diary");
   }
-  const diaryWithIdIndex = await userDiary.findIndex((d) => {
-    d.dairyId === dairyId;
+  let diaryWithIdIndex = await userDiary.findIndex((d) => {
+    d.date === dairyDate;
   });
+  if (!diaryWithIdIndex) {
+   throw new Error("not found specific diary");
+ }
   userDiary.splice(diaryWithIdIndex, 1);
-  Object.assign(users[indexOfThisUser].diary, userDiary);
-  updateData(users);
-  // data=data.map(x=>x)
-  // const slicedArray = mockData.map(d => ({...d, data: d.data.slice(0, 3)}))
-  // console.log(slicedArray)
-  //TODO- Need to cut an index that is within an index- how do it?
-  // data.splice(indexOfThisUser[indexOfThisUser], 1);
+  Object.assign(data.users[indexOfThisUser].diary, userDiary);
+  updateData(data);
+  return userDiary;
 }
 module.exports = {
   getDiary,

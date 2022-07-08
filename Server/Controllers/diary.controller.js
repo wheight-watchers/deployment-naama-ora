@@ -35,9 +35,9 @@ module.exports.updateDiary=async function(req,res,next){
 }
 module.exports.deleteDairy=async function(req,res,next){
     try{
-        const {userId}=req.params;
-        const{dairyId}=req.query;
-        const updateDairy=await dairyService.deleteDairy(userId,dairyId);
+        const userId=req.params.id;
+        const dairy=req.query.date;
+        const updateDairy=await dairyService.deleteDairy(userId,dairy);
         res.send(updateDairy)
     }
     catch(error){
