@@ -1,6 +1,6 @@
 // const { post } = require("../Controllers/user.controller");
 // const UserModel = require("../models/user.model");
-const fs = require("fs");
+const fs = require("fs/promises");
 // const { json } = require("body-parser");
 // const dataFromFile = fs.readFileSync("../file.json");
 // myData = JSON.parse(dataFromFile);
