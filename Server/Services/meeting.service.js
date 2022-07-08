@@ -10,20 +10,24 @@ module.exports = {
     const users = data.users;
     const _user = await users.find((user) => user.id === parseInt(userId));
     return _user.Weights.meetings;
+  },
+  addMeeting: async (meetings) => {
+    const data = await getData();
+    let i = 0
+    await data.users.forEach(_user => {
+      _user.Weights.meetings.push(meetings[i])
+      i = i + 1
+      Object.assign(data.users, _user);
+    })
+  
+    await updateData(data);
+    return data;
   }
-  //,
-  // addMeeting: async (meetings) => {
-  //   const data = await getData();
-  //   const users = data.users;
-  //   i = 0
-  //   await
-  //     await users.forEach(_user => {
-  //       _user.Weights.meetings.push(meetings[i]);
-  //       i = i + 1
-  //     })
-  // }
+
 
 }
+
+
 
 
 
