@@ -1,9 +1,10 @@
 const dairyService= require('../Services/diary.service')
-module.exports.getDiary=async function(req,res,next){
+
+module.exports.getDiaryByUserId=async function(req,res,next){
     try{
-        const{userId}=req.params
-        const allDiary=await dairyService.getDiary(userId);
-        res.send(allDiary)
+        const userId=req.params.id
+        const diary=await dairyService.getDiary(userId);
+        res.status(200).send(diary)
     }
     catch(error){
         next(error)
@@ -11,10 +12,10 @@ module.exports.getDiary=async function(req,res,next){
 }
 module.exports.addDiary=async function(req,res,next){
     try{
-        const {userId}=req.params;
-        const{diary}=req.body
+        const userId=req.params.id;
+        const diary=req.body;
         const diaryAdded=await dairyService.addDiary(userId,diary);
-        res.send(diaryAdded)
+        res.status(200).send(diaryAdded)
     }
     catch(error){
         next(error)

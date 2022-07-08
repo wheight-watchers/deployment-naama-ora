@@ -4,13 +4,13 @@ const uuIdv4 = uuid.v4;
 
 const getData = async () => fs.readFile('Server/file.json').then((data) => JSON.parse(data));
 const updateData = async (data) => fs.writeFile('Server/file.json', JSON.stringify(data));
-module.exports={
- getAllTheMeetingsForUser: async (userId) => {
-  const data = await getData();
-  const users = data.users;
-  const _user = await users.find((user) => user.id ===  parseInt(userId));
-  return _user.Weights.meetings;
-}
+module.exports = {
+  getAllTheMeetingsForUser: async (userId) => {
+    const data = await getData();
+    const users = data.users;
+    const _user = await users.find((user) => user.id === parseInt(userId));
+    return _user.Weights.meetings;
+  }
 
 
 }
