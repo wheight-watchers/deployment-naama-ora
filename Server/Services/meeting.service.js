@@ -11,7 +11,17 @@ module.exports = {
     const _user = await users.find((user) => user.id === parseInt(userId));
     return _user.Weights.meetings;
   }
-
+  //,
+  // addMeeting: async (meetings) => {
+  //   const data = await getData();
+  //   const users = data.users;
+  //   i = 0
+  //   await
+  //     await users.forEach(_user => {
+  //       _user.Weights.meetings.push(meetings[i]);
+  //       i = i + 1
+  //     })
+  // }
 
 }
 
