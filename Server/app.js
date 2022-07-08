@@ -13,9 +13,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 app.use("/users", userRouter);
-app.use("/meeting",
- authMiddleware,
-  meetingRouter);
+app.use("/meeting",meetingRouter);
 app.use("/account", 
 authMiddleware, 
 accountRouter);
