@@ -23,36 +23,36 @@ async function getDiary(userId) {
 }
 
 async function addDiary(userId, diary) {
-  if (!userId || diary) {
+  if (!userId || !diary) {
     throw new Error("must get user id and diary...");
   }
-  const data = await getData();
+  let data = await getData();
   const users = data.users;
-  const user = await users.forEach((user) => user.id === parseInt(userId));
+  let user = await users.find((user) => user.id === parseInt(userId));
   // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } })
-  const _diary = user.diary;
+  let _diary = user.diary;
   const exist = await _diary.find((_d) => {
     _d.date === diary.date;
   });
   if (exist) {
     throw new Error("Has been already updated on this date:) ");
   }
-  // _diary = [..._diary, diary];
-  Object.assign(_diary, [..._diary, diary]);
+  _diary = [..._diary, diary];
+//   Object.assign(_diary, [..._diary, diary]);
   await updateData(data);
   return _diary;
 }
 
 async function updateDiary(userId, dairyId, diary) {
-  const data = await getData();
+  let data = await getData();
   if (!data) {
     throw new Error("not found user to update..");
   }
   const users = data.users;
-  const user = await users.forEach((user) => user.id === parseInt(userId));
+  let user = await users.find((user) => user.id === parseInt(userId));
   // const dataForThisUser = await data.forEach((u) => { if (u.id === userId) { dataForThisUser = [...dataForThisUser, u] } });
-  const _diary = user.diary;
-  const specificDiary = await _diary.find((d) => {
+  let _diary = user.diary;
+  let specificDiary = await _diary.find((d) => {
     d.dairyId === parseInt(dairyId);
   });
   if (!specificDiary) {

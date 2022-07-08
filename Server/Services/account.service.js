@@ -7,17 +7,17 @@ const fs = require("fs/promises");
 
 const getData = async () =>
   fs.readFile("Server/file.json").then((data) => JSON.parse(data));
-const updateData = async (data) =>
-  fs.writeFile("Server/file.json", JSON.stringify(data));
+// const updateData = async (data) =>
+//   fs.writeFile("Server/file.json", JSON.stringify(data));
 
 const login = async (email, password) => {
   const data = await getData();
   const users=data.users;
   const _user = await users.find(
-    (user) => user.email === email && user.password === parseInt(password)
+    (user) => user.email == email && user.password == parseInt(password)
   );
   if(!_user){
-    throw new Error(`user with these details not found`);
+    throw new Error(`user with these details was not found`);
   }
   return _user;
   //   return await myData.find((u) => u.email === email && u.password === password);

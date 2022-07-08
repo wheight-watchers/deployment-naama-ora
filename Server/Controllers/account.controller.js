@@ -3,8 +3,8 @@ const accountService = require("../Services/account.service");
 module.exports.login = async (req, res, next) => {
   try {
     const user = await accountService.login(
-      req.params.email,
-      req.params.password
+      req.query.email,
+      req.query.password
     );
     res.status(200).send(user);
   } catch (err) {

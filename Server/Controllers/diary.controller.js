@@ -13,7 +13,7 @@ module.exports.getDiaryByUserId=async function(req,res,next){
 module.exports.addDiary=async function(req,res,next){
     try{
         const userId=req.params.id;
-        const diary=req.body;
+        let diary=req.body;
         const diaryAdded=await dairyService.addDiary(userId,diary);
         res.status(200).send(diaryAdded)
     }
