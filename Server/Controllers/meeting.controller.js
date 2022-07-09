@@ -26,7 +26,7 @@ module.exports = {
             const deletedMeeting = await MeetingService.deleteMeeting(id);
             res.send(deletedMeeting)
         }
-        catch {
+        catch(error) {
             next(error)
         }
     },
