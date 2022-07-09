@@ -14,7 +14,7 @@ const logIn = () => {
       let pswd = document.getElementById("passwordInput").value;
       if (mail == manager.email && pswd == manager.password) {
         if (window.confirm("welcome")) {
-          window.location.href = "Client/Manager.html";
+          window.location.href = "../Client/Manager.html";
         }
       } else {
         const userXHR = new XMLHttpRequest();
@@ -30,7 +30,7 @@ const logIn = () => {
             if (CurrentUser) {
               localStorage.setItem("cu", JSON.stringify(CurrentUser));//זה רק בנוסף
               debugger;
-              window.location.href = `Client/User.html?userId=${CurrentUser.id}`;
+              window.location.href = `../Client/User.html?userId=${CurrentUser.id}`;
             } else alert("user not found");
           }
         }

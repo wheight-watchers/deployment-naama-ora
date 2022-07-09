@@ -62,7 +62,7 @@ function directToEditdetails() {
 }
 function directToProducts() {
   debugger;
-  window.location.href = "src/Product.html";
+  window.location.href = "../Client/Product.html";
 }
 async function edit() {
   debugger;

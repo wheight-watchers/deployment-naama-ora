@@ -140,7 +140,6 @@ function CreateArrayOfAllProductsName() {
     })
     .then((data) => {
       data.forEach((d) => {
-  
         arrProductsName=[...arrProductsName,d.shmmitzrach]
       });
       debugger;
