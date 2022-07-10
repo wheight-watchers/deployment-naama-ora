@@ -13,9 +13,9 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 // const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
 // let express to use this
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,
-  //  {customCss}
-   ));
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,
+//   //  {customCss}
+//    ));
 
 app.use(cors());
 app.use(express.json());
@@ -31,6 +31,12 @@ app.use("/meeting",
 app.use("/account",
 //  authMiddleware,
   accountRouter);
+
+  app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
 
 app.listen(port, () => {
   console.log(` Hi! process on port ${port}`);
