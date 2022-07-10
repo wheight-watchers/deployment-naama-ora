@@ -18,7 +18,8 @@ const logIn = () => {
         }
       } else {
         const userXHR = new XMLHttpRequest();
-        userXHR.open("GET", "http://localhost:3000/users");
+        // userXHR.open("GET", "http://localhost:3000/users");
+        userXHR.open("GET", "https://safe-tor-83297.herokuapp.com/users");
         userXHR.send();
         userXHR.onload = () => {
           if (userXHR.status !== 200) {

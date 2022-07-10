@@ -4,7 +4,8 @@ function getDiaryForCurrentuser() {
   const id = params.get("userId");
   //   alert("user id: " + id);
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3000/users");
+  // xhr.open("GET", "http://localhost:3000/users");
+  xhr.open("GET", "https://safe-tor-83297.herokuapp.com/users");
   xhr.send();
   xhr.onload = () => {
     debugger;
