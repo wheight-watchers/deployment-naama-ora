@@ -9,7 +9,7 @@
       "url": "https://opensource.org/licenses/MIT"
     }
   },
-  "host": "localhost:8000",
+  "host": "localhost:3000",
   "basePath": "/",
   "tags": [
     {
@@ -29,9 +29,32 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "successful!",
             "schema": {
               "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "/addUser": {
+      "post": {
+        "tags": ["Users"],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to add",
+            "schema": {
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
             }
           }
         }
