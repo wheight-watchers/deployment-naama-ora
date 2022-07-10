@@ -4,20 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node Server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wheight-watchers/deployment-naama-ora.git"
+    "url": "git+https://github.com/wheight-watchers/deployment-racheli-naama-ora.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wheight-watchers/deployment-naama-ora/issues"
+    "url": "https://github.com/wheight-watchers/deployment-racheli-naama-ora/issues"
   },
-  "homepage": "https://github.com/wheight-watchers/deployment-naama-ora#readme",
+  "homepage": "https://github.com/wheight-watchers/deployment-racheli-naama-ora#readme",
   "dependencies": {
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",

@@ -8,6 +8,15 @@ const accountRouter = require("./Routes/account.router");
 var bodyParser = require('body-parser')
 const port = process.env.PORT || 3000;
 
+// import library and files
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+// const customCss = fs.readFileSync((process.cwd()+"/swagger.css"), 'utf8');
+// let express to use this
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument,
+  //  {customCss}
+   ));
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
