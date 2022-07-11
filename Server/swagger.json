@@ -59,6 +59,29 @@
           }
         }
       }
+    },
+    "/deleteUser": {
+      "delete": {
+        "tags": ["Users"],
+        "description": "Delete user from the system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to add",
+            "schema": {
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "User is deleted",
+            "schema": {
+            }
+          }
+        }
+      }
     }
   }
 }
