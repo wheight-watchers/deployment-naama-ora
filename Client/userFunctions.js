@@ -1,8 +1,8 @@
-async function getUsers() {
-  let url = "http://localhost:3000/users";
+async function getUsers(id) {
+  const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
+ 
   try {
     let res = await fetch(url);
-    //we have to add here a configuration to users
     return await res.json();
   } catch (error) {
     alert(error);
@@ -13,9 +13,8 @@ async function userDetails() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
   debugger;
-  let users = await getUsers();
-  const CurrentUser = users.find((u) => u.id == id);
-  // alert(CurrentUser);
+  const CurrentUser=await getUsers(id);
+ 
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -26,7 +25,6 @@ async function userDetails() {
   let value9 = CurrentUser.height;
   let value10 = CurrentUser.Weights.startWeight;
   let meet = CurrentUser.Weights.meetings;
-  // console.log(meet);
   meet.forEach((m) => {
     debugger;
 
