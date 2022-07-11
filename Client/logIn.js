@@ -1,8 +1,14 @@
 let CurrentUser;
 const logIn = () => {
+  const mail = document.getElementById("mailInput").value;
+  const pswd = document.getElementById("passwordInput").value;
+  const manager_url=`https://safe-tor-83297.herokuapp.com/account/login/manager?email=${mail}&password=${pswd}`;
+  const user_url=`https://safe-tor-83297.herokuapp.com/account/login/user?email=${mail}&password=${pswd}`;
+  const manager = await fetch(manager_url).then((res=> {debugger; res.json})).catch(()=>{debugger;});
+
   debugger;
   const managerXHR = new XMLHttpRequest();
-  managerXHR.open("GET", "http://localhost:3000/manager");
+  managerXHR.open("GET", );
   managerXHR.send();
   managerXHR.onload = () => {
     if (managerXHR.status !== 200) {

@@ -12,17 +12,21 @@ const getData = async () =>
 
 const login = async (email, password) => {
   const data = await getData();
+  const manager=data.manager;
   const users=data.users;
   const _user = await users.find(
     (user) => user.email == email && user.password == parseInt(password)
   );
   if(!_user){
-    throw new Error(`user with these details was not found`);
+    if(manager.password == password && manager.email == email){
+      return manager;
+    }
+    else throw new Error(`user or manager with these details was not found`);
   }
   return _user;
-  //   return await myData.find((u) => u.email === email && u.password === password);
 };
 
 module.exports = {
   login,
+  // signUp
 };
