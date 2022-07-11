@@ -17,15 +17,72 @@
       "description": "API for users in the system"
     }
   ],
-  "schemes": ["http"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
-    "/users/{userId}": {
+    "/users": {
       "get": {
         "summary": "Get all the users",
         "description": "Get all the tasks",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "add user",
+        "description": "add user to users",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "user object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "task": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "created successfully",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "summary": "get user by id",
+        "description": "get user by id",
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "userId",
@@ -49,7 +106,9 @@
       "delete": {
         "summary": "delete this user",
         "description": "delete this user",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "id",
@@ -69,42 +128,13 @@
         }
       }
     },
-    "/users": {
-      "post": {
-        "summary": "add user",
-        "description": "add user to users",
-        "produces": ["application/json"],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "user object",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "task": {
-                  "type": "object"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array"
-            }
-          }
-        }
-      }
-    },
     "/users/{putId}": {
       "put": {
         "summary": "upDate this user",
         "description": "upDate this user",
-        "produces": ["application/json"],
+        "produces": [
+          "application/json"
+        ],
         "parameters": [
           {
             "name": "putId",
@@ -126,6 +156,32 @@
                 }
               }
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array"
+            }
+          }
+        }
+      }
+    },
+    "/meeting/{userId}": {
+      "get": {
+        "summary": "get meetings by user id",
+        "description": "Get all the meetings",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "get meeting by userId",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {
