@@ -13,8 +13,8 @@ async function userDetails() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
   debugger;
-  const CurrentUser=await getUsers(id);
- 
+  const CurrentUser = await getUsers(id);
+
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -66,7 +66,7 @@ async function edit() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const CurrentUser=await getUsers(id);
+  const CurrentUser = await getUsers(id);
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -88,16 +88,10 @@ async function edit() {
 
 async function saveYourDetails() {
   debugger;
-
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const updateUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
-  // const users = await fetch("http://localhost:3000/users").then((res => {
-  //   return res.json();
-  // }))
-  const CurrentUser=await fetch(updateUser).then((res=>{return res.json}))
+  const CurrentUser = await getUsers(id);
   debugger;
-  // CurrentUser = users.find((u) => u.id == id);
   let firstName = document.getElementById("nameInput").value;
   let lastName = document.getElementById("lastNameInput").value;
   let email = document.getElementById("emailInput").value;
@@ -106,9 +100,6 @@ async function saveYourDetails() {
   let building = document.getElementById("addressBuildingInput").value;
   let age = document.getElementById("ageInput").value;
   let height = document.getElementById("heightInput").value;
-
-
-
 
   debugger
   const data =
@@ -128,18 +119,14 @@ async function saveYourDetails() {
     "diary": CurrentUser.diary
   }
 
-
-  fetch(updateUser, {
-
+  fetch(CurrentUser, {
     method: 'PUT',
-
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => response.json())
-
     .then((data) => {
       console.log('Success:', data);
       window.location.href = `User.html?userId=${id}`;
@@ -148,9 +135,6 @@ async function saveYourDetails() {
     .catch((error) => {
       console.error('Error:', error);
     });
-
-
-
-  } 
+}
 
 
