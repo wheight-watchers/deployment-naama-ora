@@ -1,6 +1,6 @@
 async function getUsers(id) {
   const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
- 
+
   try {
     let res = await fetch(url);
     return await res.json();
@@ -66,13 +66,7 @@ async function edit() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const showUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
-  // const res = await fetch("../db-1655750686617.json");
-  const res = await fetch(showUser);
-  const CurrentUser = await res.json();
-  // CurrentUser = users.find((u) => u.id == id);
-  // let myData = localStorage["cu"];
-  // localStorage.clear();
+  const CurrentUser=await getUsers(id);
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -81,7 +75,6 @@ async function edit() {
   let value7 = CurrentUser.address.building;
   let value8 = CurrentUser.age;
   let value9 = CurrentUser.height;
-
   document.getElementById("name").nameInput += "hello " + value1;
   document.getElementById("nameInput").value = value1;
   document.getElementById("lastNameInput").value = value2;
