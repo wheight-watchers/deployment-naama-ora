@@ -2,25 +2,27 @@ function getDiaryForCurrentuser() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
+  const detailsForUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   //   alert("user id: " + id);
   const xhr = new XMLHttpRequest();
   // xhr.open("GET", "http://localhost:3000/users");
-  xhr.open("GET", "https://safe-tor-83297.herokuapp.com/users");
+  xhr.open("GET", detailsForUser);
   xhr.send();
   xhr.onload = () => {
-    debugger;
-    if (xhr.status != 200) {
-      alert(`Error ${xhr.status}: ${xhr.statusText}`);
-    } else {
-      let users = JSON.parse(xhr.response);
-      let diary;
-      for (let index = 0; index < users.length; index++) {
-        debugger;
-        if (users[index].id == id) {
-          diary = users[index].diary;
-          break;
-        }
-      }
+    const diary=JSON.parse(xhr.response);
+    // debugger;
+    // if (xhr.status != 200) {
+    //   alert(`Error ${xhr.status}: ${xhr.statusText}`);
+    // } else {
+    //   let users = JSON.parse(xhr.response);
+    //   let diary;
+    //   for (let index = 0; index < users.length; index++) {
+    //     debugger;
+    //     if (users[index].id === id) {
+    //       diary = users[index].diary;
+    //       break;
+    //     }
+      // }
       let table = `<table>
       <tr>
       <th>Date</th>
@@ -69,8 +71,8 @@ function getDiaryForCurrentuser() {
       table += `</table>`;
       document.getElementById("diary").innerHTML += table;
     }
-  };
-}
+ }
+
 Object.byString = function (o, s) {
   debugger;
   s = s.replace(/\[(\w+)\]/g, ".$1"); // convert indexes to properties

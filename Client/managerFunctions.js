@@ -1,15 +1,17 @@
 let start = 0;
 const configUrl = "http://localhost:3000/users";
+const getAllUser="https://safe-tor-83297.herokuapp.com/users"
 function getParams() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
+  const getAllUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", configUrl);
+  xhr.open("GET", getAllUser);
   xhr.send();
   xhr.onload = () => {
-    let users = JSON.parse(xhr.responseText);
-    CurrentUser = users.find((u) => u.id == id);
+    //let users = JSON.parse(xhr.responseText);
+    CurrentUser = JSON.parse(xhr.responseText);
     document.getElementById(
       "userDetails"
     ).innerHTML += `<h1>${CurrentUser.firstName} details</h1>`;
@@ -48,7 +50,7 @@ function getUsersForManager() {
   if (start == 0) {
     debugger;
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", configUrl);
+    xhr.open("GET", getAllUser);
     xhr.send();
     xhr.onload = () => {
       if (xhr.status != 200) {

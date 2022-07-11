@@ -68,10 +68,11 @@ async function edit() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
+  const sowUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   // const res = await fetch("../db-1655750686617.json");
-  const res = await fetch("http://localhost:3000/users");
-  const users = await res.json();
-  CurrentUser = users.find((u) => u.id == id);
+  const res = await fetch(sowUser);
+  const CurrentUser = await res.json();
+  // CurrentUser = users.find((u) => u.id == id);
   // let myData = localStorage["cu"];
   // localStorage.clear();
   let value1 = CurrentUser.firstName;
@@ -99,10 +100,13 @@ async function saveYourDetails() {
 
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const users = await fetch("http://localhost:3000/users").then((res => {
-    return res.json();
-  }))
-  CurrentUser = users.find((u) => u.id == id);
+  const updateUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
+  // const users = await fetch("http://localhost:3000/users").then((res => {
+  //   return res.json();
+  // }))
+  const CurrentUser=await fetch(updateUser).then((res=>{return res.json}))
+  debugger;
+  // CurrentUser = users.find((u) => u.id == id);
   let firstName = document.getElementById("nameInput").value;
   let lastName = document.getElementById("lastNameInput").value;
   let email = document.getElementById("emailInput").value;
@@ -118,7 +122,7 @@ async function saveYourDetails() {
   debugger
   const data =
   {
-    id: CurrentUser.id,
+    id: id,
     "firstName": firstName,
     "lastName": lastName,
     "email": email,
@@ -134,7 +138,7 @@ async function saveYourDetails() {
   }
 
 
-  fetch(`http://localhost:3000/users/${id}`, {
+  fetch(updateUser, {
 
     method: 'PUT',
 
