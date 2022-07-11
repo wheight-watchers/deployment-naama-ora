@@ -4,7 +4,7 @@ const getData = async () => fs.readFile('file.json').then((data) => JSON.parse(d
 
 const updateData = async (data) =>
   fs.writeFile(
-    "file.json",
+    'file.json',
     JSON.stringify(data),
     function (err, result) {
       if (err) console.log("error", err);

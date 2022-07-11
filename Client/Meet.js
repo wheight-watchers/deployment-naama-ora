@@ -36,8 +36,8 @@ function newMeeting() {
     let users = JSON.parse(xhr.responseText);
     users.forEach((u) => {
       debugger
-      let w = document.getElementById(u.id + "Weight").value;
-      weights.push({id: meetId, date: meetDate, weight: w })
+      let wgt = document.getElementById(u.id + "Weight").value;
+      weights.push({id: meetId, date: meetDate, weight: wgt })
     })
   }
   xhr.onloadend = () => {
@@ -50,13 +50,18 @@ function newMeeting() {
     fetch(add, {
       method: "POST",
       body: JSON.stringify({      
-       body:weights
+      //  "body":
+       weights
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-      .then(response => response.json())
+      .then(response =>{
+        response.json();
+        alert("added succesfully");
+      }
+      )
       .then(json => console.log(json));
   }
 

@@ -20,7 +20,7 @@ module.exports={
       );
       res.status(200).send(manager);
     } catch (err) {
-      alert("not found");
+      // alert("not found");
       next(err);
     }
   }

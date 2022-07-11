@@ -13,8 +13,10 @@ module.exports = {
   },
   addMeeting: async (meetings) => {
     const data = await getData();
-    let i = 0
-    await data.users.forEach(_user => {
+    debugger
+    let i = 0;
+    const users = data.users;
+    await users.forEach(_user => {
       _user.Weights.meetings.push(meetings[i])
       i = i + 1
       Object.assign(data.users, _user);

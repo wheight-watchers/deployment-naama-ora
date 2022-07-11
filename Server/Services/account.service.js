@@ -8,7 +8,7 @@ const fs = require("fs/promises");
 const getData = async () =>
   fs.readFile("file.json").then((data) => JSON.parse(data));
 // const updateData = async (data) =>
-//   fs.writeFile("Server/file.json", JSON.stringify(data));
+//   fs.writeFile('file.json', JSON.stringify(data));
 
 const userlogin = async (email, password) => {
   const data = await getData();
@@ -17,14 +17,14 @@ const userlogin = async (email, password) => {
     (user) => user.email == email && user.password == parseInt(password)
   );
   // if (_user) {
-    return _user;
+  return _user;
   // }
   // throw new Error(`user with these details was not found`);
 };
 const managerlogin = async (email, password) => {
   const data = await getData();
   const manager = data.manager;
-  if(manager.password == password && manager.email == email){
+  if (manager.password == password && manager.email == email) {
     return manager;
   }
   // throw new Error(`manager with these details was not found`);
