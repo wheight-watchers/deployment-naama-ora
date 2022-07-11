@@ -3,7 +3,7 @@ const accountService = require("../Services/account.service");
 module.exports={
   userLogin : async (req, res, next) => {
     try {
-      const user = await accountService.Userlogin(
+      const user = await accountService.userlogin(
         req.query.email,
         req.query.password
       );
@@ -14,12 +14,13 @@ module.exports={
   },
   managerLogin : async (req, res, next) => {
     try {
-      const user = await accountService.managerlogin(
+      const manager = await accountService.managerlogin(
         req.query.email,
         req.query.password
       );
-      res.status(200).send(user);
+      res.status(200).send(manager);
     } catch (err) {
+      alert("not found");
       next(err);
     }
   }

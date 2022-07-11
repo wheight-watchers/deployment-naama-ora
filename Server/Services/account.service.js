@@ -16,10 +16,10 @@ const userlogin = async (email, password) => {
   const _user = await users.find(
     (user) => user.email == email && user.password == parseInt(password)
   );
-  if (_user) {
+  // if (_user) {
     return _user;
-  }
-  throw new Error(`user with these details was not found`);
+  // }
+  // throw new Error(`user with these details was not found`);
 };
 const managerlogin = async (email, password) => {
   const data = await getData();
@@ -27,7 +27,8 @@ const managerlogin = async (email, password) => {
   if(manager.password == password && manager.email == email){
     return manager;
   }
-  throw new Error(`manager with these details was not found`);
+  // throw new Error(`manager with these details was not found`);
+  return null;
 };
 module.exports = {
   userlogin,
