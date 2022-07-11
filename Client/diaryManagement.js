@@ -110,7 +110,6 @@ btn.onclick = function () {
   addInputForDinner();
   addInputForSnack();
 };
-//////////////////////////
 numOfInputsForBreakfast = 0;
 function addInputForBreakfast() {
   debugger;
@@ -129,7 +128,6 @@ function addInputForBreakfast() {
     body.appendChild(input);
   }
 }
-//////////////////////////
 numOfInputsForLunch = 0;
 function addInputForLunch() {
   debugger;
@@ -148,7 +146,6 @@ function addInputForLunch() {
     body.appendChild(input);
   }
 }
-//////////////////////////
 numOfInputsForDinner = 0;
 function addInputForDinner() {
   debugger;
@@ -167,7 +164,7 @@ function addInputForDinner() {
     body.appendChild(input);
   }
 }
-//////////////////////////
+
 numOfInputsForSnack = 0;
 function addInputForSnack() {
   debugger;

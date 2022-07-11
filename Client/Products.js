@@ -52,7 +52,7 @@ function clearProducts() {
 if (true) {
   let arrProductsName = [];
 }
-function CreateArrayOfAllProductsName() {
+async function CreateArrayOfAllProductsName() {
   i = 0;
   index = 0;
   debugger;
@@ -83,6 +83,8 @@ function CreateArrayOfAllProductsName() {
       document.getElementById("buttonEdit").style.display = "block";
     });
 }
+
+
 async function AutomaticSearchResults() {
   debugger;
   let arrProductsName = [];

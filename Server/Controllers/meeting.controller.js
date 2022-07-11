@@ -13,6 +13,7 @@ module.exports = {
     addMeeting: async (req, res, next) => {
 
         try {
+            debugger
             const insertMeeting = await MeetingService.addMeeting(req.body)
             res.send(insertMeeting)
         }

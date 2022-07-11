@@ -33,39 +33,35 @@ function newMeeting() {
   xhr.send();
   xhr.onload = () => {
     debugger;
-    // if (xhr.status != 200) {
-    //   alert(`Error ${xhr.status}: ${managerXHR.statusText}`);
-    // } else {
     let users = JSON.parse(xhr.responseText);
-    //   const meetDate = document.forms.meet.date.value;
-    //   const IdDate = document.forms.meet.id.value;
-
     users.forEach((u) => {
       debugger
       let w = document.getElementById(u.id + "Weight").value;
-      weights.push({ id: meetId, date: meetDate, weight: w })
+      weights.push({id: meetId, date: meetDate, weight: w })
     })
   }
-  xhr.onloadend=()=>{
-    const addMeeting="https://safe-tor-83297.herokuapp.com/meeting"
-
-    fetch(addMeeting, {
+  xhr.onloadend = () => {
+    
+    debugger
+    console.log(weights)
+    const addMeeting = "https://safe-tor-83297.herokuapp.com/meeting"
+    const add = "http://localhost:3000/meeting"
+    const parametr=""
+    fetch(add, {
       method: "POST",
-      body: JSON.stringify({
-        body:weights
+      body: JSON.stringify({      
+       body:weights
       }),
       headers: {
-          "Content-type": "application/json; charset=UTF-8"
+        "Content-type": "application/json; charset=UTF-8"
       }
-  })
-  .then(response => response.json())
-  .then(json => console.log(json));
-
-
+    })
+      .then(response => response.json())
+      .then(json => console.log(json));
   }
 
   //   debugger
-   
+
   // fetch(updateUser, {
 
   //   method: 'POST',
@@ -77,7 +73,7 @@ function newMeeting() {
   // })
   //   console.log(weights)
   // }
- 
+
 }
 // debugger;
 // const xhr = new XMLHttpRequest();
