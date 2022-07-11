@@ -2,9 +2,9 @@ const fs = require("fs/promises");
 const uuid = require("uuid");
 const uuIdv4 = uuid.v4;
 
-const getData = async () => fs.readFile('file.json').then((data) => JSON.parse(data));
+const getData = async () => fs.readFile('Server/file.json').then((data) => JSON.parse(data));
 
-const updateData = async (data) => fs.writeFile('file.json', JSON.stringify(data), function (err, result) {
+const updateData = async (data) => fs.writeFile('Server/file.json', JSON.stringify(data), function (err, result) {
   if (err) console.log('error', err);
   else console.log('success', result)
 });
@@ -38,8 +38,8 @@ module.exports = {
     return _user;
   },
   deleteUser: async (id) => {
-    let data = await getData();
-    let users = data.users;
+    const data = await getData();
+    const users = data.users;
     const index = await users.findIndex((user) => user.id === parseInt(id));
     if (index === -1) {
       throw new Error(`user with id ${id} not found`);
@@ -50,9 +50,20 @@ module.exports = {
     return data;
   },
   updateUser: async (id, newUser) => {
-    const d = await deleteUser(id);
-    const data = await addUser(newUser);
-    return data
+    const userData = await getData();
+    const users = userData.users;
+    const index = await users.findIndex((user) => user.id === parseInt(id));
+    if (index === -1) {
+      throw new Error(`user with id ${id} not found`);
+    }
+    users.splice(index, 1);
+    Object.assign(userData.users, users);
+    await updateData(userData);
+    userData.users.push(newUser)
+    await updateData(userData);
+    return userData;
+
+  
 
   }
 }

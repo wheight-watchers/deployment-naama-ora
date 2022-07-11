@@ -6,7 +6,7 @@ const fs = require("fs/promises");
 // myData = JSON.parse(dataFromFile);
 
 const getData = async () =>
-  fs.readFile("file.json").then((data) => JSON.parse(data));
+  fs.readFile("Server/file.json").then((data) => JSON.parse(data));
 // const updateData = async (data) =>
 //   fs.writeFile("Server/file.json", JSON.stringify(data));
 
