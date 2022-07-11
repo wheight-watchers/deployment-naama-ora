@@ -3,7 +3,7 @@ function displayUsersForEnterWeight() {
   dateInput.value = new Date().toLocaleDateString();
   debugger;
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3000/users");
+  xhr.open("GET", "https://safe-tor-83297.herokuapp.com/users");
   xhr.send();
   xhr.onload = () => {
     debugger;
