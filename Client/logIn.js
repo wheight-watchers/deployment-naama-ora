@@ -1,5 +1,6 @@
 let CurrentUser;
-const logIn = () => {
+const logIn = async() => {
+  debugger;
   const mail = document.getElementById("mailInput").value;
   const pswd = document.getElementById("passwordInput").value;
   const manager_url=`https://safe-tor-83297.herokuapp.com/account/login/manager?email=${mail}&password=${pswd}`;

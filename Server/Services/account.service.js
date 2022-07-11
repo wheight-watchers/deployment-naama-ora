@@ -10,23 +10,27 @@ const getData = async () =>
 // const updateData = async (data) =>
 //   fs.writeFile("Server/file.json", JSON.stringify(data));
 
-const login = async (email, password) => {
+const userlogin = async (email, password) => {
   const data = await getData();
-  const manager=data.manager;
-  const users=data.users;
+  const users = data.users;
   const _user = await users.find(
     (user) => user.email == email && user.password == parseInt(password)
   );
-  if(!_user){
-    if(manager.password == password && manager.email == email){
-      return manager;
-    }
-    else throw new Error(`user or manager with these details was not found`);
+  if (_user) {
+    return _user;
   }
-  return _user;
+  throw new Error(`user with these details was not found`);
 };
-
+const managerlogin = async (email, password) => {
+  const data = await getData();
+  const manager = data.manager;
+  if(manager.password == password && manager.email == email){
+    return manager;
+  }
+  throw new Error(`manager with these details was not found`);
+};
 module.exports = {
-  login,
+  userlogin,
+  managerlogin,
   // signUp
 };

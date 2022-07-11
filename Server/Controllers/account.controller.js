@@ -1,15 +1,25 @@
 const accountService = require("../Services/account.service");
 
 module.exports={
-  login : async (req, res, next) => {
+  userLogin : async (req, res, next) => {
     try {
-      const userOrManager = await accountService.login(
+      const user = await accountService.Userlogin(
         req.query.email,
         req.query.password
       );
-      res.status(200).send(userOrManager);
+      res.status(200).send(user);
     } catch (err) {
-      alert("was not found");
+      next(err);
+    }
+  },
+  managerLogin : async (req, res, next) => {
+    try {
+      const user = await accountService.managerlogin(
+        req.query.email,
+        req.query.password
+      );
+      res.status(200).send(user);
+    } catch (err) {
       next(err);
     }
   }
