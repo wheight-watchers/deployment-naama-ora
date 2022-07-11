@@ -68,9 +68,9 @@ async function edit() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const sowUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
+  const showUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   // const res = await fetch("../db-1655750686617.json");
-  const res = await fetch(sowUser);
+  const res = await fetch(showUser);
   const CurrentUser = await res.json();
   // CurrentUser = users.find((u) => u.id == id);
   // let myData = localStorage["cu"];
@@ -160,6 +160,6 @@ async function saveYourDetails() {
 
 
 
-  }
+  } 
 
 

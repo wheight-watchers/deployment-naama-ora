@@ -302,7 +302,7 @@ function filterByAddress(users, citySelect, streetSelect) {
   return users;
 }
 
-function newMeeting() {}
+// function newMeeting() {}
 // window.onload=getUsersForManager();
 
 function directToMeetings() {

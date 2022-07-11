@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const userRouter = require("./Routes/user.router");
+// const managerRouter = require("./Routes/manager.router");
 const meetingRouter = require("./Routes/meeting.router");
 const accountRouter = require("./Routes/account.router");
 const authMiddleware = require("./MiddleWare/middleware");
@@ -16,6 +17,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
+// app.use("/manager", managerRouter);
 app.use("/users", userRouter);
 app.use("/meeting",
 //  authMiddleware,

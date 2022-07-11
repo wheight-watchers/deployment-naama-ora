@@ -2,11 +2,11 @@ function getDiaryForCurrentuser() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const detailsForUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
+  const userDiary=`https://safe-tor-83297.herokuapp.com/users/${id}/diary`
   //   alert("user id: " + id);
   const xhr = new XMLHttpRequest();
-  // xhr.open("GET", "http://localhost:3000/users");
-  xhr.open("GET", detailsForUser);
+  // xhr.open("GET", "http://localhost:3000/users"); 
+  xhr.open("GET", userDiary);
   xhr.send();
   xhr.onload = () => {
     const diary=JSON.parse(xhr.response);

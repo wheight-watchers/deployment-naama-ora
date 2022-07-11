@@ -6,23 +6,32 @@ const fs = require("fs/promises");
 // myData = JSON.parse(dataFromFile);
 
 const getData = async () =>
-  fs.readFile("Server/file.json").then((data) => JSON.parse(data));
+  fs.readFile("file.json").then((data) => JSON.parse(data));
 // const updateData = async (data) =>
 //   fs.writeFile("Server/file.json", JSON.stringify(data));
 
-const login = async (email, password) => {
+const userlogin = async (email, password) => {
   const data = await getData();
-  const users=data.users;
+  const users = data.users;
   const _user = await users.find(
     (user) => user.email == email && user.password == parseInt(password)
   );
-  if(!_user){
-    throw new Error(`user with these details was not found`);
-  }
-  return _user;
-  //   return await myData.find((u) => u.email === email && u.password === password);
+  // if (_user) {
+    return _user;
+  // }
+  // throw new Error(`user with these details was not found`);
 };
-
+const managerlogin = async (email, password) => {
+  const data = await getData();
+  const manager = data.manager;
+  if(manager.password == password && manager.email == email){
+    return manager;
+  }
+  // throw new Error(`manager with these details was not found`);
+  return null;
+};
 module.exports = {
-  login,
+  userlogin,
+  managerlogin,
+  // signUp
 };
