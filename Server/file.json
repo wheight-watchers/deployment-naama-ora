@@ -106,7 +106,7 @@
           ]
         },
         {
-          "date": "12/04/2020",
+          "date": "14/04/2020",
           "summary": [
             {
               "Breakfast": [
@@ -145,11 +145,7 @@
       "firstName": "Shimon",
       "lastName": "Cohen",
       "email": "sc@gmail.com",
-      "address": {
-        "city": "Tel-aviv",
-        "street": "arlozerov",
-        "building": 5
-      },
+      "address": { "city": "Tel-aviv", "street": "arlozerov", "building": "5" },
       "height": 1.7,
       "age": 33,
       "Weights": {
@@ -409,11 +405,7 @@
       "firstName": "Yehuda",
       "lastName": "Cohen",
       "email": "yc@gmail.com",
-      "address": {
-        "city": "Ramat-Gan",
-        "street": "Harohe",
-        "building": 5
-      },
+      "address": { "city": "Ramat-Gan", "street": "Harohe", "building": "5" },
       "height": 1.7,
       "age": 33,
       "Weights": {

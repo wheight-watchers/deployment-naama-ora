@@ -161,8 +161,7 @@ function addInputForSnack() {
 span.onclick = function () {
   modal.style.display = "none";
 };
-//TODO
-function addDayToDiary() {
+async function addDayToDiary() {
   debugger;
   const dateInput = document.getElementById("dateInput").value;
   let snackArr = [];
@@ -204,29 +203,27 @@ function addDayToDiary() {
       },
     ],
   };
+  debugger
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  let diary = [];
+  // let diary = [];
   const xhr = new XMLHttpRequest();
   const userDiary = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}/diary`)
 
-  xhr.open("GET", userDiary);
-  xhr.send();
-  xhr.onload = () => {
-    debugger;
-    if (xhr.status != 200) {
-      alert(`Error ${xhr.status}: ${xhr.statusText}`);
-    } else {
-      let userId = JSON.parse(xhr.response);
-     diary=userId
-    }
-    diary[diary.length] = data;
-    fetch(userDiary, {
-      method: "PATCH",
-      headers: { "Content-type": "application/json; charset=UTF-8" },
-      body: JSON.stringify({
-        diary: diary,
-      }),
+  // xhr.open("GET", userDiary);
+  // xhr.send();
+  // xhr.onload = () => {
+  //   debugger;
+  //   if (xhr.status != 200) {
+  //     alert(`Error ${xhr.status}: ${xhr.statusText}`);
+  //   } else {
+  //      diary =await JSON.parse(xhr.response);
+  //   }
+  //   diary[diary.length] = data;
+    await fetch(userDiary, {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
     })
       .then((response) => {
         debugger;
@@ -251,5 +248,5 @@ function addDayToDiary() {
       document.getElementById("Breakfast_inputs");
     content_Breakfast_inputs.innerHTML = "";
     modal.style.display = "none";
-  };
+  // };
 }
