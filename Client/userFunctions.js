@@ -117,22 +117,19 @@ async function saveYourDetails() {
     "Weights": CurrentUser.Weights,
     "diary": CurrentUser.diary
   }
- fetch(url, {
-    method: 'PUT',
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-      window.location.href = `User.html?userId=${CurrentUser.id}`;
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+    window.location.href = `User.html?userId=${CurrentUser.id}`;
+  } 
+  catch (err) {
+    alert(err)
+  }
 }
 
 
