@@ -1,8 +1,9 @@
 let start = 0;
 const getAllUser = new URL("https://safe-tor-83297.herokuapp.com/users")
 async function returnAllUser() {
+  debugger;
   try {
-    const res = await fetch(getAllUser)
+    let res = await fetch(getAllUser)
     return res.json();
   }
   catch (error) {
@@ -58,7 +59,6 @@ async function getUsersForManager() {
   debugger;
   if (start == 0) {
     debugger;
-
    const allUser=await returnAllUser();
    let userMeetings =allUser[0].Weights.meetings;
    numOfMeetings = Object.keys(userMeetings).length;
@@ -163,64 +163,162 @@ function directMyDetails(user) {
 
   window.location.href = `Details.html?userId=${user.id}`;
 }
-function filterUsers() {
+async function filterUsers() {
+debugger;
+
+  const text = document.getElementById("searchByFreeTextInput").value;
+  let biggerThanWeight =document.getElementById("biggerThanWeight").valueAsNumber;
+  let lowerThanWeight = document.getElementById("lowerThanWeight").valueAsNumber;
+  const lostOrGained = document.getElementById("select_lost/gained").value;
+  const from = document.getElementById("select_from").value;
+  let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
+  let biggerThanBMI =document.getElementById("biggerThanBMI").valueAsNumber;
+  const s = document.getElementById("streetSelect");
+  const streetSelect = s.options[s.selectedIndex].outerText;
+  const c = document.getElementById("citySelect");
+  const citySelect = c.options[c.selectedIndex].outerText;
+  let users=await returnAllUser();
+  let userMeetings = users[0].Weights.meetings;
+  numOfmeetings = Object.keys(userMeetings).length;
   debugger;
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", getAllUser);
-  xhr.send();
-  xhr.onloadend = () => {
-    if (xhr.status != 200) {
-      alert(`Error ${xhr.status}: ${xhr.statusText}`);
-    } else {
-      const text = document.getElementById("searchByFreeTextInput").value;
-      let biggerThanWeight =
-        document.getElementById("biggerThanWeight").valueAsNumber;
-      let lowerThanWeight =
-        document.getElementById("lowerThanWeight").valueAsNumber;
-      const lostOrGained = document.getElementById("select_lost/gained").value;
-      const from = document.getElementById("select_from").value;
-      let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
-      let biggerThanBMI =
-        document.getElementById("biggerThanBMI").valueAsNumber;
-      const s = document.getElementById("streetSelect");
-      const streetSelect = s.options[s.selectedIndex].outerText;
-      const c = document.getElementById("citySelect");
-      const citySelect = c.options[c.selectedIndex].outerText;
+  if (text != "") {
+    users = filterByText(users, text);
+  }
+  if (biggerThanWeight || lowerThanWeight) {
+    if (!biggerThanWeight) biggerThanWeight = 0;
+    if (!lowerThanWeight) lowerThanWeight = 200;
+    users = filterByWeight(users, biggerThanWeight, lowerThanWeight);
+  }
+  if (lostOrGained != "lost/gained" && from != "from") {
+    users = filterByGainedOrLost(users, lostOrGained, from, numOfmeetings);
+  }
+  if (lowerThanBMI != "" || biggerThanBMI != "") {
+    debugger;
+    if (!lowerThanBMI) lowerThanBMI = 200;
+    if (!biggerThanBMI) biggerThanBMI = 0;
+    users = filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings);
+  }
+  if (streetSelect != "street" || citySelect != "city") {
+    users = filterByAddress(users, citySelect, streetSelect);
+  }
+  document.getElementById("allUsers").innerHTML = "";
+  // document
+  //   .getElementById("allUsers")
+  //   .append(
+  showUsers(users, numOfmeetings);
 
-      let users = JSON.parse(xhr.responseText);
-      let userMeetings = users[0].Weights.meetings;
-      numOfmeetings = Object.keys(userMeetings).length;
 
-      debugger;
-      if (text != "") {
-        users = filterByText(users, text);
-      }
-      if (biggerThanWeight || lowerThanWeight) {
-        if (!biggerThanWeight) biggerThanWeight = 0;
-        if (!lowerThanWeight) lowerThanWeight = 200;
-        users = filterByWeight(users, biggerThanWeight, lowerThanWeight);
-      }
-      if (lostOrGained != "lost/gained" && from != "from") {
-        users = filterByGainedOrLost(users, lostOrGained, from, numOfmeetings);
-      }
-      if (lowerThanBMI != "" || biggerThanBMI != "") {
-        debugger;
-        if (!lowerThanBMI) lowerThanBMI = 200;
-        if (!biggerThanBMI) biggerThanBMI = 0;
-        users = filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings);
-      }
-      if (streetSelect != "street" || citySelect != "city") {
-        users = filterByAddress(users, citySelect, streetSelect);
-      }
 
-      document.getElementById("allUsers").innerHTML = "";
-      // document
-      //   .getElementById("allUsers")
-      //   .append(
-      showUsers(users, numOfmeetings);
-      // );
-    }
-  };
+
+  // debugger;
+  // const allUser = await returnAllUser();
+  // const text = document.getElementById("searchByFreeTextInput").value;
+  // let biggerThanWeight = document.getElementById("biggerThanWeight").valueAsNumber;
+  // let lowerThanWeight = document.getElementById("lowerThanWeight").valueAsNumber;
+  // const lostOrGained = document.getElementById("select_lost/gained").value;
+  // const from = document.getElementById("select_from").value;
+  // let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
+  // let biggerThanBMI = document.getElementById("biggerThanBMI").valueAsNumber;
+  // const s = document.getElementById("streetSelect");
+  // const streetSelect = s.options[s.selectedIndex].outerText;
+  // const c = document.getElementById("citySelect");
+  // const citySelect = c.options[c.selectedIndex].outerText;
+  // let userMeetings = allUser[0].Weights.meetings;
+  // numOfMeetings = Object.keys(userMeetings).length;
+  // debugger;
+  // if (text != "") {
+  //   allUser = filterByText(allUser, text);
+  // }
+  // if (biggerThanWeight || lowerThanWeight) {
+  //   if (!biggerThanWeight) biggerThanWeight = 0;
+  //   if (!lowerThanWeight) lowerThanWeight = 200;
+  //   allUser = filterByWeight(allUser, biggerThanWeight, lowerThanWeight);
+  // }
+  // if (lostOrGained != "lost/gained" && from != "from") {
+  //   allUser = filterByGainedOrLost(allUser, lostOrGained, from, numOfMeetings);
+  // }
+  // if (lowerThanBMI != "" || biggerThanBMI != "") {
+  //   debugger;
+  //   if (!lowerThanBMI) lowerThanBMI = 200;
+  //   if (!biggerThanBMI) biggerThanBMI = 0;
+  //   allUser = filterByBMI(allUser, biggerThanBMI, lowerThanBMI, numOfMeetings);
+  // }
+  // if (streetSelect != "street" || citySelect != "city") {
+  //   allUser = filterByAddress(allUser, citySelect, streetSelect);
+  // }
+  // document.getElementById("allUsers").innerHTML = "";
+  // showUsers(allUser, numOfMeetings);
+
+
+
+
+
+
+
+
+
+
+  // const allUser=await returnAllUser();
+
+
+
+  // debugger;
+  // const xhr = new XMLHttpRequest();
+  // xhr.open("GET", getAllUser);
+  // xhr.send();
+  // xhr.onloadend = () => {
+  //   if (xhr.status != 200) {
+  //     alert(`Error ${xhr.status}: ${xhr.statusText}`);
+  //   } else {
+  //     const text = document.getElementById("searchByFreeTextInput").value;
+  //     let biggerThanWeight =
+  //       document.getElementById("biggerThanWeight").valueAsNumber;
+  //     let lowerThanWeight =
+  //       document.getElementById("lowerThanWeight").valueAsNumber;
+  //     const lostOrGained = document.getElementById("select_lost/gained").value;
+  //     const from = document.getElementById("select_from").value;
+  //     let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
+  //     let biggerThanBMI =
+  //       document.getElementById("biggerThanBMI").valueAsNumber;
+  //     const s = document.getElementById("streetSelect");
+  //     const streetSelect = s.options[s.selectedIndex].outerText;
+  //     const c = document.getElementById("citySelect");
+  //     const citySelect = c.options[c.selectedIndex].outerText;
+
+  //     let users = JSON.parse(xhr.responseText);
+  //     let userMeetings = users[0].Weights.meetings;
+  //     numOfmeetings = Object.keys(userMeetings).length;
+
+  //     debugger;
+  //     if (text != "") {
+  //       users = filterByText(users, text);
+  //     }
+  //     if (biggerThanWeight || lowerThanWeight) {
+  //       if (!biggerThanWeight) biggerThanWeight = 0;
+  //       if (!lowerThanWeight) lowerThanWeight = 200;
+  //       users = filterByWeight(users, biggerThanWeight, lowerThanWeight);
+  //     }
+  //     if (lostOrGained != "lost/gained" && from != "from") {
+  //       users = filterByGainedOrLost(users, lostOrGained, from, numOfmeetings);
+  //     }
+  //     if (lowerThanBMI != "" || biggerThanBMI != "") {
+  //       debugger;
+  //       if (!lowerThanBMI) lowerThanBMI = 200;
+  //       if (!biggerThanBMI) biggerThanBMI = 0;
+  //       users = filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings);
+  //     }
+  //     if (streetSelect != "street" || citySelect != "city") {
+  //       users = filterByAddress(users, citySelect, streetSelect);
+  //     }
+
+  //     document.getElementById("allUsers").innerHTML = "";
+  //     // document
+  //     //   .getElementById("allUsers")
+  //     //   .append(
+  //     showUsers(users, numOfmeetings);
+  //     // );
+  //   }
+  // };
 }
 function filterByText(users, text) {
   users = users.filter((u) => {
