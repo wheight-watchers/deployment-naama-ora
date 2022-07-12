@@ -5,10 +5,9 @@ function getParams() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const getAllUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
+  const getUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   const xhr = new XMLHttpRequest();
-  
-  xhr.open("GET", getAllUser);
+  xhr.open("GET", getUser);
   xhr.send();
   xhr.onload = () => {
     //let users = JSON.parse(xhr.responseText);
@@ -171,7 +170,7 @@ function directMyDetails(user) {
 function filterUsers() {
   debugger;
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", configUrl);
+  xhr.open("GET",getAllUser);
   xhr.send();
   xhr.onloadend = () => {
     if (xhr.status != 200) {
@@ -192,9 +191,11 @@ function filterUsers() {
       const streetSelect = s.options[s.selectedIndex].outerText;
       const c = document.getElementById("citySelect");
       const citySelect = c.options[c.selectedIndex].outerText;
+
       let users = JSON.parse(xhr.responseText);
       let userMeetings = users[0].Weights.meetings;
       numOfmeetings = Object.keys(userMeetings).length;
+      
       debugger;
       if (text != "") {
         users = filterByText(users, text);
