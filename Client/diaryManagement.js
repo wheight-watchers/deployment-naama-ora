@@ -2,28 +2,14 @@ function getDiaryForCurrentuser() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const userDiary=`https://safe-tor-83297.herokuapp.com/users/${id}/diary`
-  //   alert("user id: " + id);
+  const userDiary = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}/diary`)
+
   const xhr = new XMLHttpRequest();
-  // xhr.open("GET", "http://localhost:3000/users"); 
   xhr.open("GET", userDiary);
   xhr.send();
   xhr.onload = () => {
-    const diary=JSON.parse(xhr.response);
-    // debugger;
-    // if (xhr.status != 200) {
-    //   alert(`Error ${xhr.status}: ${xhr.statusText}`);
-    // } else {
-    //   let users = JSON.parse(xhr.response);
-    //   let diary;
-    //   for (let index = 0; index < users.length; index++) {
-    //     debugger;
-    //     if (users[index].id === id) {
-    //       diary = users[index].diary;
-    //       break;
-    //     }
-      // }
-      let table = `<table>
+    const diary = JSON.parse(xhr.response);
+    let table = `<table>
       <tr>
       <th>Date</th>
       <th>Breakfast</th>
@@ -32,46 +18,41 @@ function getDiaryForCurrentuser() {
       <th>Intermediate snack</th>
       </tr>
       `;
-      diary.forEach((day) => {
+    diary.forEach((day) => {
+      debugger;
+      table += `<tr><th>${day.date}</th>`;
+      let foods1 = "";
+      day.summary[0].Breakfast.forEach((i, ind) => {
         debugger;
-        table += `<tr><th>${day.date}</th>`;
-        // day.summary.forEach((meal)=>{
-        let foods1 = "";
-        day.summary[0].Breakfast.forEach((i, ind) => {
-          debugger;
-          foods1 += Object.byString(day.summary[0], `Breakfast[${ind}]`) + ", ";
-        });
-        table += `<td>${foods1}</td>`;
-        let foods2 = "";
-        day.summary[1].Lunch.forEach((i, ind) => {
-          debugger;
-          foods2 += Object.byString(day.summary[1], `Lunch[${ind}]`) + ", ";
-        });
-        table += `<td>${foods2}</td>`;
-        let foods3 = "";
-        day.summary[2].Dinner.forEach((i, ind) => {
-          debugger;
-          foods3 += Object.byString(day.summary[2], `Dinner[${ind}]`) + ", ";
-        });
-        table += `<td>${foods3}</td>`;
-        let foods4 = "";
-        day.summary[3].IntermediateSnack.forEach((i, ind) => {
-          debugger;
-          foods4 +=
-            Object.byString(day.summary[3], `IntermediateSnack[${ind}]`) + ", ";
-        });
-        table += `<td>${foods4}</td>`;
-        // meal.forEach((food)=>{
-        //   foods+=food+", "
-        // })
-        // })
-        debugger;
-        table += `</tr>`;
+        foods1 += Object.byString(day.summary[0], `Breakfast[${ind}]`) + ", ";
       });
-      table += `</table>`;
-      document.getElementById("diary").innerHTML += table;
-    }
- }
+      table += `<td>${foods1}</td>`;
+      let foods2 = "";
+      day.summary[1].Lunch.forEach((i, ind) => {
+        debugger;
+        foods2 += Object.byString(day.summary[1], `Lunch[${ind}]`) + ", ";
+      });
+      table += `<td>${foods2}</td>`;
+      let foods3 = "";
+      day.summary[2].Dinner.forEach((i, ind) => {
+        debugger;
+        foods3 += Object.byString(day.summary[2], `Dinner[${ind}]`) + ", ";
+      });
+      table += `<td>${foods3}</td>`;
+      let foods4 = "";
+      day.summary[3].IntermediateSnack.forEach((i, ind) => {
+        debugger;
+        foods4 +=
+          Object.byString(day.summary[3], `IntermediateSnack[${ind}]`) + ", ";
+      });
+      table += `<td>${foods4}</td>`;
+      debugger;
+      table += `</tr>`;
+    });
+    table += `</table>`;
+    document.getElementById("diary").innerHTML += table;
+  }
+}
 
 Object.byString = function (o, s) {
   debugger;
@@ -88,22 +69,14 @@ Object.byString = function (o, s) {
   }
   return o;
 };
-// Get the modal
 let modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
 let btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
 let span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal
 btn.onclick = function () {
   debugger;
   const dateInput = document.getElementById("dateInput");
   dateInput.value = new Date().toLocaleDateString();
   modal.style.display = "block";
-  // let body = document.getElementsByClassName("Breakfast_inputs");
   debugger;
   addInputForBreakfast();
   addInputForLunch();
