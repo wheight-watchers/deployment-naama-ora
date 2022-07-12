@@ -117,7 +117,7 @@ async function saveYourDetails() {
     "Weights": CurrentUser.Weights,
     "diary": CurrentUser.diary
   }
-  fetch(url, {
+ res=await fetch(url, {
     method: 'PUT',
     body: JSON.stringify(data),
     headers: {

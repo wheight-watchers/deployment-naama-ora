@@ -9,7 +9,7 @@ const logIn = async () => {
   const XHR = new XMLHttpRequest();
   XHR.open("GET", manager_url);
   XHR.send();
-  XHR.onload = () => {
+  XHR.onload = () => { 
     if (XHR.status !== 200) {
       alert(`Error ${XHR.status}: ${XHR.statusText}`);
     } else {
@@ -20,6 +20,7 @@ const logIn = async () => {
           window.location.href = "../Client/Manager.html";
         }
       } else {
+
         const userXHR = new XMLHttpRequest();
         userXHR.open("GET", user_url);
         userXHR.send();
