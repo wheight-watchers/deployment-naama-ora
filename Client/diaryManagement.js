@@ -208,24 +208,20 @@ function addDayToDiary() {
   const id = params.get("userId");
   let diary = [];
   const xhr = new XMLHttpRequest();
-  xhr.open("GET", "http://localhost:3000/users");
+  const userDiary = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}/diary`)
+
+  xhr.open("GET", userDiary);
   xhr.send();
   xhr.onload = () => {
     debugger;
     if (xhr.status != 200) {
       alert(`Error ${xhr.status}: ${xhr.statusText}`);
     } else {
-      let users = JSON.parse(xhr.response);
-      for (let index = 0; index < users.length; index++) {
-        debugger;
-        if (users[index].id == id) {
-          diary = users[index].diary;
-          break;
-        }
-      }
+      let userId = JSON.parse(xhr.response);
+     diary=userId
     }
     diary[diary.length] = data;
-    fetch(`http://localhost:3000/users/${id}`, {
+    fetch(userDiary, {
       method: "PATCH",
       headers: { "Content-type": "application/json; charset=UTF-8" },
       body: JSON.stringify({
