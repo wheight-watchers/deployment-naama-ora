@@ -91,6 +91,7 @@ async function saveYourDetails() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
   const CurrentUser = await getUsers(id);
+  const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
   debugger;
   let firstName = document.getElementById("nameInput").value;
   let lastName = document.getElementById("lastNameInput").value;
@@ -104,7 +105,7 @@ async function saveYourDetails() {
   debugger
   const data =
   {
-    id: id,
+    "id": CurrentUser.id,
     "firstName": firstName,
     "lastName": lastName,
     "email": email,
@@ -118,8 +119,7 @@ async function saveYourDetails() {
     "Weights": CurrentUser.Weights,
     "diary": CurrentUser.diary
   }
-
-  fetch(CurrentUser, {
+  fetch(url, {
     method: 'PUT',
     body: JSON.stringify(data),
     headers: {
@@ -129,7 +129,7 @@ async function saveYourDetails() {
     .then((response) => response.json())
     .then((data) => {
       console.log('Success:', data);
-      window.location.href = `User.html?userId=${id}`;
+      window.location.href = `User.html?userId=${CurrentUser.id}`;
     })
 
     .catch((error) => {
