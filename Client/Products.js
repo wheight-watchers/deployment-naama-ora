@@ -1,3 +1,7 @@
+
+
+
+
 function searchProducts() {
   document.getElementById("load").style.display = "block";
   document.getElementById("resultAutomatic").innerHTML = "";
@@ -46,79 +50,7 @@ function searchProducts() {
     .catch((err) => console.log(err));
 }
 
-function clearProducts() {
-  document.getElementById("ingredients").innerHTML = "";
-}
-if (true) {
-  let arrProductsName = [];
-}
-async function CreateArrayOfAllProductsName() {
-  i = 0;
-  index = 0;
-  debugger;
 
-  const options = {
-    method: "GET",
-    headers: {},
-  };
-
-  let result = fetch(
-    "https://data.gov.il/api/3/action/datastore_search?resource_id=c3cb0630-0650-46c1-a068-82d575c094b2&limit=4630",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      const data = response.result.records;
-      console.log(data);
-      return data;
-    })
-    .then((data) => {
-      data.forEach((d) => {
-        arrProductsName.push(d.shmmitzrach);
-      });
-      debugger;
-      console.log(arrProductsName.length);
-      debugger;
-      localStorage.setItem("arrProductsName", JSON.stringify(arrProductsName));
-      document.getElementById("buttonEdit").style.display = "block";
-    });
-}
-
-
-async function AutomaticSearchResults() {
-  debugger;
-  let arrProductsName = [];
-  arrProductsName = JSON.parse(localStorage.getItem("arrProductsName"));
-
-  document.getElementById("resultAutomatic").innerHTML = "";
-  const inputValue = document.getElementById("productName").value;
-  console.log(arrProductsName.length);
-  debugger;
-
-  for (i = 0; i < 500; i++) {
-    debugger;
-    if (arrProductsName[i].includes(inputValue) == true) {
-      document.getElementById("resultAutomatic").innerHTML +=
-        `<button class="automaticInput" id="b${i}" onclick="valueToInput(this.id)">${arrProductsName[i]}</button>` +
-        `<br></br>`;
-    }
-  }
-}
-
-function valueToInput(val) {
-  debugger;
-  console.log(val);
-  debugger;
-  document.getElementById("productName").value = "";
-  debugger;
-  v = document.getElementById(val).innerText;
-  document.getElementById("productName").value = v;
-  document.getElementById("resultAutomatic").innerHTML = "";
-}
-function clearProducts() {
-  document.getElementById("ingredients").innerHTML = "";
-  document.getElementById("buttonProduct-clear").style.display = "none";
-}
 let arrProductsName = [];
 // function CreateArrayOfAllProductsName() {
 //   i = 0;
@@ -206,10 +138,21 @@ function clearProducts() {
 
 
 const getusersList = () => {
-  const userRes=await fetch(`https://safe-tor-83297.herokuapp.com/users`)
-          console.log(userRes);
-          usersList.users = userRes.json;
-     const managerRes= await fetch('https://safe-tor-83297.herokuapp.com/account/login/manager?email=manager@gmail.com&password=123')
-      usersList.manager = managerRes.json;
-      console.log(usersList.manager);
+  fetch(`http://localhost:3000/users`)
+      .then(response => {
+          console.log(response);
+          usersList.users = response.users;
+          usersList.manager = response.manager;
+          console.log(usersList.manager);
+      })
 };
+
+
+
+
+
+
+
+
+
+
