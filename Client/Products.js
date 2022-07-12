@@ -46,9 +46,7 @@ function searchProducts() {
     .catch((err) => console.log(err));
 }
 
-function clearProducts() {
-  document.getElementById("ingredients").innerHTML = "";
-}
+
 if (true) {
   let arrProductsName = [];
 }
@@ -86,23 +84,27 @@ async function CreateArrayOfAllProductsName() {
 
 
 async function AutomaticSearchResults() {
+  arrProductsName = [];
   debugger;
-  let arrProductsName = [];
   arrProductsName = JSON.parse(localStorage.getItem("arrProductsName"));
 
+  document.getElementById("ingredients").innerHTML = "";
   document.getElementById("resultAutomatic").innerHTML = "";
   const inputValue = document.getElementById("productName").value;
-  console.log(arrProductsName.length);
-  debugger;
 
-  for (i = 0; i < 500; i++) {
-    debugger;
-    if (arrProductsName[i].includes(inputValue) == true) {
-      document.getElementById("resultAutomatic").innerHTML +=
-        `<button class="automaticInput" id="b${i}" onclick="valueToInput(this.id)">${arrProductsName[i]}</button>` +
-        `<br></br>`;
-    }
+  console.log(arrProductsName.length);
+
+  debugger;
+  let terms = await autoComplete(inputValue);
+  debugger
+  let list = '';
+  for (i=0; i<terms.length; i++) {
+    list+=`<button class="automaticInput" id="b${i}" onclick="valueToInput(this.id)"> ${terms[i]} </button>`+`<br>`
+    
   }
+  resultAutomatic.innerHTML = `<ul> ${list} </ul>`;
+
+
 }
 
 function valueToInput(val) {
@@ -120,60 +122,9 @@ function clearProducts() {
   document.getElementById("buttonProduct-clear").style.display = "none";
 }
 let arrProductsName = [];
-function CreateArrayOfAllProductsName() {
-  i = 0;
-  index = 0;
-  debugger;
-
-  const options = {
-    method: "GET",
-    headers: {},
-  };
-
-  let result = fetch(
-    "https://data.gov.il/api/3/action/datastore_search?resource_id=c3cb0630-0650-46c1-a068-82d575c094b2&limit=4630",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      const data = response.result.records;
-      console.log(data);
-      return data;
-    })
-    .then((data) => {
-      data.forEach((d) => {
-        arrProductsName=[...arrProductsName,d.shmmitzrach]
-      });
-      debugger;
-      console.log(arrProductsName.length);
-      debugger;
-      localStorage.setItem("arrProductsName", JSON.stringify(arrProductsName));
-      document.getElementById("buttonEdit").style.display = "inline";
-    });
-}
-async function AutomaticSearchResults() {
-  arrProductsName = [];
-  debugger;
-  arrProductsName = JSON.parse(localStorage.getItem("arrProductsName"));
-
-  document.getElementById("ingredients").innerHTML = "";
-  document.getElementById("resultAutomatic").innerHTML = "";
-  const inputValue = document.getElementById("productName").value;
-
-  console.log(arrProductsName.length);
-
-  debugger;
-  let terms = autoComplete(inputValue);
-  debugger
-  let list = '';
-  for (i=0; i<terms.length; i++) {
-    list+=`<button class="automaticInput" id="b${i}" onclick="valueToInput(this.id)"> ${terms[i]} </button>`+`<br>`
-    
-  }
-  resultAutomatic.innerHTML = `<ul> ${list} </ul>`;
 
 
-}
+
 
 function autoComplete(inputValue) {
   if (inputValue === '') {

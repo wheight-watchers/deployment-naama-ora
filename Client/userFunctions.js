@@ -1,6 +1,5 @@
 async function getUsers(id) {
   const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
-
   try {
     let res = await fetch(url);
     return await res.json();
@@ -101,7 +100,6 @@ async function saveYourDetails() {
   let building = document.getElementById("addressBuildingInput").value;
   let age = document.getElementById("ageInput").value;
   let height = document.getElementById("heightInput").value;
-
   debugger
   const data =
   {

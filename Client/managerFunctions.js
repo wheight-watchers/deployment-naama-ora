@@ -7,6 +7,7 @@ function getParams() {
   const id = params.get("userId");
   const getAllUser=`https://safe-tor-83297.herokuapp.com/users/${id}`
   const xhr = new XMLHttpRequest();
+  
   xhr.open("GET", getAllUser);
   xhr.send();
   xhr.onload = () => {
