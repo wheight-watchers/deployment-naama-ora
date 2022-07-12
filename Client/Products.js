@@ -120,37 +120,37 @@ function clearProducts() {
   document.getElementById("buttonProduct-clear").style.display = "none";
 }
 let arrProductsName = [];
-function CreateArrayOfAllProductsName() {
-  i = 0;
-  index = 0;
-  debugger;
+// function CreateArrayOfAllProductsName() {
+//   i = 0;
+//   index = 0;
+//   debugger;
 
-  const options = {
-    method: "GET",
-    headers: {},
-  };
+//   const options = {
+//     method: "GET",
+//     headers: {},
+//   };
 
-  let result = fetch(
-    "https://data.gov.il/api/3/action/datastore_search?resource_id=c3cb0630-0650-46c1-a068-82d575c094b2&limit=4630",
-    options
-  )
-    .then((response) => response.json())
-    .then((response) => {
-      const data = response.result.records;
-      console.log(data);
-      return data;
-    })
-    .then((data) => {
-      data.forEach((d) => {
-        arrProductsName=[...arrProductsName,d.shmmitzrach]
-      });
-      debugger;
-      console.log(arrProductsName.length);
-      debugger;
-      localStorage.setItem("arrProductsName", JSON.stringify(arrProductsName));
-      document.getElementById("buttonEdit").style.display = "inline";
-    });
-}
+//   let result = fetch(
+//     "https://data.gov.il/api/3/action/datastore_search?resource_id=c3cb0630-0650-46c1-a068-82d575c094b2&limit=4630",
+//     options
+//   )
+//     .then((response) => response.json())
+//     .then((response) => {
+//       const data = response.result.records;
+//       console.log(data);
+//       return data;
+//     })
+//     .then((data) => {
+//       data.forEach((d) => {
+//         arrProductsName=[...arrProductsName,d.shmmitzrach]
+//       });
+//       debugger;
+//       console.log(arrProductsName.length);
+//       debugger;
+//       localStorage.setItem("arrProductsName", JSON.stringify(arrProductsName));
+//       document.getElementById("buttonEdit").style.display = "inline";
+//     });
+// }
 async function AutomaticSearchResults() {
   arrProductsName = [];
   debugger;
