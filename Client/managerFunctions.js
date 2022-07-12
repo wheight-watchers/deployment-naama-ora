@@ -1,5 +1,14 @@
 let start = 0;
 const getAllUser = new URL("https://safe-tor-83297.herokuapp.com/users")
+async function returnAllUser() {
+  try {
+    const res = await fetch(getAllUser)
+    return res.json();
+  }
+  catch (error) {
+    alert(error)
+  }
+}
 async function getParams() {
   debugger;
   const params = new URLSearchParams(window.location.search);
@@ -7,7 +16,7 @@ async function getParams() {
   const getUser = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`)
   try {
     const response = await fetch(getUser)
-    const CurrentUser =await response.json();
+    const CurrentUser = await response.json();
     document.getElementById(
       "userDetails"
     ).innerHTML += `<h1>${CurrentUser.firstName} details</h1>`;
@@ -45,24 +54,17 @@ async function getParams() {
     alert(error)
   }
 }
-function getUsersForManager() {
+async function getUsersForManager() {
+  debugger;
   if (start == 0) {
     debugger;
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", getAllUser);
-    xhr.send();
-    xhr.onload = () => {
-      if (xhr.status != 200) {
-        alert(`Error ${xhr.status}: ${xhr.statusText}`);
-      } else {
-        debugger;
-        let jsonusers = JSON.parse(xhr.responseText);
-        let userMeetings = jsonusers[0].Weights.meetings;
-        numOfmeetings = Object.keys(userMeetings).length;
-        console.log(jsonusers);
-        let cities = [];
-        let ind = 0;
-        jsonusers.forEach((u, i) => {
+
+   const allUser=await returnAllUser();
+   let userMeetings =allUser[0].Weights.meetings;
+   numOfMeetings = Object.keys(userMeetings).length;
+   let cities = [];
+   let ind = 0;
+   allUser.forEach((u, i) => {
           debugger;
           let CITY = JSON.stringify(u.address.city).replace(/"/g, "");
           // alert(`${i} -> ${CITY}`);
@@ -81,7 +83,7 @@ function getUsersForManager() {
           debugger;
           // alert(`${i} -> ${c}`);
           city.options[i + 1] = new Option(c, i + 1);
-          jsonusers.forEach((j, ind) => {
+          allUser.forEach((j, ind) => {
             debugger;
             if (j.address.city == c) {
               debugger;
@@ -93,14 +95,9 @@ function getUsersForManager() {
         });
         start += 1;
         document.getElementById("allUsers").innerHTML = "";
-        // document
-        //   .getElementById("allUsers")
-        //   .append(
-        showUsers(jsonusers, numOfmeetings);
-        // );
-      }
-    };
-  }
+        showUsers(allUser, numOfMeetings);
+    
+   }
 }
 function showUsers(jsonusers, numOfmeetings) {
   debugger;
@@ -175,7 +172,6 @@ function filterUsers() {
     if (xhr.status != 200) {
       alert(`Error ${xhr.status}: ${xhr.statusText}`);
     } else {
-      // alert(JSON.parse(xhr.responseText));
       const text = document.getElementById("searchByFreeTextInput").value;
       let biggerThanWeight =
         document.getElementById("biggerThanWeight").valueAsNumber;
