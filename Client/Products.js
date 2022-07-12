@@ -137,15 +137,6 @@ function clearProducts() {
 }
 
 
-const getusersList = () => {
-  fetch(`http://localhost:3000/users`)
-      .then(response => {
-          console.log(response);
-          usersList.users = response.users;
-          usersList.manager = response.manager;
-          console.log(usersList.manager);
-      })
-};
 
 
 
