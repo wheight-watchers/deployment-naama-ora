@@ -206,11 +206,10 @@ function clearProducts() {
 
 
 const getusersList = () => {
-  fetch(`http://localhost:3000/users`)
-      .then(response => {
-          console.log(response);
-          usersList.users = response.users;
-          usersList.manager = response.manager;
-          console.log(usersList.manager);
-      })
+  const userRes=await fetch(`https://safe-tor-83297.herokuapp.com/users`)
+          console.log(userRes);
+          usersList.users = userRes.json;
+     const managerRes= await fetch('https://safe-tor-83297.herokuapp.com/account/login/manager?email=manager@gmail.com&password=123')
+      usersList.manager = managerRes.json;
+      console.log(usersList.manager);
 };
