@@ -58,13 +58,9 @@ module.exports = {
     }
     users.splice(index, 1);
     Object.assign(userData.users, users);
-    await updateData(userData);
     userData.users.push(newUser)
     await updateData(userData);
     return userData;
-
-  
-
   }
 }
 

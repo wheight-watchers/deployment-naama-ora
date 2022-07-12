@@ -17,11 +17,12 @@ module.exports = {
     let i = 0;
     const users = data.users;
     await users.forEach(_user => {
-      _user.Weights.meetings.push(meetings[i])
+      // _user.Weights.meetings.push(meetings[i])
+      _user.Weights.meetings=[..._user.Weights.meetings,meetings[i]]
       i = i + 1
-      Object.assign(data.users, _user);
+      // Object.assign(data.users, _user)
     })
-
+    data.users=users;
     await updateData(data);
     return data;
   },
