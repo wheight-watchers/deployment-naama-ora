@@ -1,3 +1,7 @@
+
+
+
+
 function searchProducts() {
   document.getElementById("load").style.display = "block";
   document.getElementById("resultAutomatic").innerHTML = "";
@@ -47,10 +51,8 @@ function searchProducts() {
 }
 
 
-if (true) {
-  let arrProductsName = [];
-}
-async function CreateArrayOfAllProductsName() {
+let arrProductsName = [];
+function CreateArrayOfAllProductsName() {
   i = 0;
   index = 0;
   debugger;
@@ -72,17 +74,15 @@ async function CreateArrayOfAllProductsName() {
     })
     .then((data) => {
       data.forEach((d) => {
-        arrProductsName.push(d.shmmitzrach);
+        arrProductsName=[...arrProductsName,d.shmmitzrach]
       });
       debugger;
       console.log(arrProductsName.length);
       debugger;
       localStorage.setItem("arrProductsName", JSON.stringify(arrProductsName));
-      document.getElementById("buttonEdit").style.display = "block";
+      document.getElementById("buttonEdit").style.display = "inline";
     });
 }
-
-
 async function AutomaticSearchResults() {
   arrProductsName = [];
   debugger;
@@ -95,7 +95,7 @@ async function AutomaticSearchResults() {
   console.log(arrProductsName.length);
 
   debugger;
-  let terms = await autoComplete(inputValue);
+  let terms = autoComplete(inputValue);
   debugger
   let list = '';
   for (i=0; i<terms.length; i++) {
@@ -106,25 +106,6 @@ async function AutomaticSearchResults() {
 
 
 }
-
-function valueToInput(val) {
-  debugger;
-  console.log(val);
-  debugger;
-  document.getElementById("productName").value = "";
-  debugger;
-  v = document.getElementById(val).innerText;
-  document.getElementById("productName").value = v;
-  document.getElementById("resultAutomatic").innerHTML = "";
-}
-function clearProducts() {
-  document.getElementById("ingredients").innerHTML = "";
-  document.getElementById("buttonProduct-clear").style.display = "none";
-}
-let arrProductsName = [];
-
-
-
 
 function autoComplete(inputValue) {
   if (inputValue === '') {
@@ -157,10 +138,21 @@ function clearProducts() {
 
 
 const getusersList = () => {
-  const userRes=await fetch(`https://safe-tor-83297.herokuapp.com/users`)
-          console.log(userRes);
-          usersList.users = userRes.json;
-     const managerRes= await fetch('https://safe-tor-83297.herokuapp.com/account/login/manager?email=manager@gmail.com&password=123')
-      usersList.manager = managerRes.json;
-      console.log(usersList.manager);
+  fetch(`http://localhost:3000/users`)
+      .then(response => {
+          console.log(response);
+          usersList.users = response.users;
+          usersList.manager = response.manager;
+          console.log(usersList.manager);
+      })
 };
+
+
+
+
+
+
+
+
+
+
