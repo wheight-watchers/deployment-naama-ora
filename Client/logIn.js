@@ -4,8 +4,8 @@ const logIn = async () => {
   debugger;
   const mail = document.getElementById("mailInput").value;
   const pswd = document.getElementById("passwordInput").value;
-  let manager_url = new URL(`https://safe-tor-83297.herokuapp.com/account/login/manager?email=${mail}&password=${pswd}`);
-  let user_url = new URL(`https://safe-tor-83297.herokuapp.com/account/login/user?email=${mail}&password=${pswd}`);
+  const manager_url = new URL(`https://safe-tor-83297.herokuapp.com/account/login/manager?email=${mail}&password=${pswd}`);
+  const user_url = new URL(`https://safe-tor-83297.herokuapp.com/account/login/user?email=${mail}&password=${pswd}`);
   debugger;
   try {
     let manager = await fetch(manager_url);
