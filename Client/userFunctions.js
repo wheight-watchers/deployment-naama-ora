@@ -123,6 +123,8 @@ async function saveYourDetails() {
       body: JSON.stringify(data),
       headers: {
         'Content-Type': 'application/json',
+      // GIFLENS-https://media0.giphy.com/media/llKJGxQ1ESmac/200.gif
+      // GIFLENS-https://media3.giphy.com/media/3og0ID5AW1SmPuG3u0/200.gif
       },
     })
     window.location.href = `User.html?userId=${CurrentUser.id}`;
