@@ -32,6 +32,3 @@ const usersSchema = new Schema({
 })
 const UsersModel = mongoose.model('Users', usersSchema);
 module.exports = UsersModel;
-//   const meet1 =new _meeting({id:1,date:'13/07/2022',weight:100});
-//   const meet2 =new _meeting({id:1,date:'13/07/2022',weight:100});
-//   const meet3 =new _meeting({id:1,date:'13/07/2022',weight:100});
