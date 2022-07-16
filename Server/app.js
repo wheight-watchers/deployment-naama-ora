@@ -7,6 +7,7 @@ const userRouter = require("./Routes/user.router");
 const meetingRouter = require("./Routes/meeting.router");
 const accountRouter = require("./Routes/account.router");
 const authMiddleware = require("./MiddleWare/middleware");
+const logger = require('./configuration');
 const port = process.env.PORT || 3000;
 const swaggerUi = require('swagger-ui-express'),
   swaggerDocument = require('./swagger.json');
@@ -20,8 +21,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
 app.use("/users",
-
-
   userRouter);
 app.use("/meeting",
   //  authMiddleware,
