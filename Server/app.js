@@ -3,14 +3,13 @@ const mongoose = require('mongoose');
 const app = express();
 const cors = require("cors");
 const userRouter = require("./Routes/user.router");
-// const managerRouter = require("./Routes/manager.router");
 const meetingRouter = require("./Routes/meeting.router");
 const accountRouter = require("./Routes/account.router");
 const authMiddleware = require("./MiddleWare/middleware");
 const logger = require('./configuration');
 const port = process.env.PORT || 3000;
-const swaggerUi = require('swagger-ui-express'),
-  swaggerDocument = require('./swagger.json');
+const swaggerUi = require('swagger-ui-express');
+swaggerDocument = require('./swagger.json');
 var bodyParser = require('body-parser')
 app.use(cors());
 app.use(express.json());
