@@ -57,8 +57,8 @@ module.exports = {
       throw new Error(`user with id ${id} not found`);
     }
     users.splice(index, 1);
+    users.push(newUser)
     Object.assign(userData.users, users);
-    userData.users.push(newUser)
     await updateData(userData);
     return userData;
   }
