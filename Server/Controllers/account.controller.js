@@ -13,13 +13,14 @@ module.exports={
   },
   managerLogin : async (req, res, next) => {
     try {
+      debugger
       const manager = await accountService.managerlogin(
         req.query.email,
         req.query.password
       );
+      debugger
       res.status(200).send(manager);
     } catch (err) {
-      // alert("not found");
       next(err);
     }
   }

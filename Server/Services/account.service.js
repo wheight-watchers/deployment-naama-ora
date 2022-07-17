@@ -22,12 +22,14 @@ const userlogin = async (email, password) => {
   // throw new Error(`user with these details was not found`);
 };
 const managerlogin = async (email, password) => {
+  debugger
   const data = await getData();
   const manager = data.manager;
+  debugger
   if (manager.password == password && manager.email == email) {
     return manager;
   }
-  // throw new Error(`manager with these details was not found`);
+ throw new Error(`manager with these details was not found`);
   return null;
 };
 module.exports = {

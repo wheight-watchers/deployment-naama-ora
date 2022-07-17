@@ -13,16 +13,17 @@ const logConfiguration = {
         new winston.transports.File({
             level: 'error',
             filename: 'Log/log.log'
-        }),
-        new winston.transports.MongoDB({
-            level:'error',
-            db:process.env.CONNECTION_STRING,
-            options: {
-                useUnifiedTopology: true
-            },
-            collection: 'server_logs'
-            
         })
+        // ,
+        // new winston.transports.MongoDB({
+        //     level:'error',
+        //     db:process.env.CONNECTION_STRING,
+        //     options: {
+        //         useUnifiedTopology: true
+        //     },
+        //     collection: 'server_logs'
+            
+        // })
     ],
     format: winston.format.combine(
         winston.format.timestamp({
