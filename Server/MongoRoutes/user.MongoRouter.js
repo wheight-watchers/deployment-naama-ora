@@ -1,5 +1,6 @@
 const express=require('express');
 const controller= require('../MongoControllers/user.MongoController')
+const express= require('express')
 const diaryController=require('../MongoControllers/diary.MongoController')
 
 const router=express.Router();

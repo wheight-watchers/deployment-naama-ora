@@ -13,7 +13,7 @@ const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
 // const logger = require('./Log/logger');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
-var bodyParser = require('body-parser')
+let bodyParser = require('body-parser')
 const dotenv = require('dotenv');
 const port=process.env.PORT||3000;
 dotenv.config();
