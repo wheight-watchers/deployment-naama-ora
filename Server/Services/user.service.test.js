@@ -10,3 +10,15 @@ test('password of user with id 1 to be 1', () => {
         expect(JSON.parse(user).password).toBe(1);
     })
 });
+describe('AJAX functions with Jest', () => {
+    const mockUrl = '/users';
+    const mockUsers = [{ name: 'jack', name: 'jill' }];
+    const getUsers = jest.fn(url => mockUsers);
+    it('returns returns users from an api call', () => {
+      expect(getUsers(mockUrl)).toBe(mockUsers);
+      console.log(getUsers);
+    });
+    it('called getUser with a mockUrl', () => {
+      expect(getUsers).toHaveBeenCalledWith(mockUrl);
+    });
+  });

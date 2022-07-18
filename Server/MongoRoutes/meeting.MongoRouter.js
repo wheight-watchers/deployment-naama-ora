@@ -7,3 +7,5 @@ router.get('/:id',controller.getAllTheMeetingsForUser);
 router.post('/',controller.addMeeting);
 router.put('/:id',controller.updateMeeting);
 router.delete('/:id',controller.deleteMeeting);
+
+module.exports = router;

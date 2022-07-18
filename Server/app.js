@@ -15,11 +15,12 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 var bodyParser = require('body-parser')
 const dotenv = require('dotenv');
+const port=process.env.PORT||3000;
 dotenv.config();
 db.connect();
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded());
+// app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -44,6 +45,6 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument)
 );
-app.listen(process.env.PORT, () => {
-  console.log(` Hi! process on port ${process.env.PORT}`);
+app.listen(port, () => {
+  console.log(` Hi! process on port ${port}`);
 });

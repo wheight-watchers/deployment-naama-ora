@@ -1,10 +1,17 @@
-const db = require('../DB/dataBase');
+// const db = require('../DB/dataBase');
 const { ObjectId } = require('mongodb');
+const userModel=require('../Models/users.schema')
 
 module.exports = {
     getAllUsers: async function (req, res) {
-        const users = await db.getDB().collection("users").find().toArray();
-        res.send(users);
+        // const users = await db.getDB().collection("users").find().toArray();
+        const users=userModel.find({});
+        // res.send(users);
+        try {
+            res.send(users);
+          } catch (error) {
+            res.status(500).send(error);
+          }
     },
 
     getUserById: async function (req, res) {

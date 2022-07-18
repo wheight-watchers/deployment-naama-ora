@@ -1,5 +1,5 @@
 const { MongoClient } = require('mongodb');
-const connectionString = "https://localhost:27017/weight-watchers";
+const connectionString = "https://localhost:27017/weight-watchers.users";
 class dataBase {
 
   constructor() {
@@ -13,7 +13,7 @@ class dataBase {
 
     let connected = await client.connect();
     Logger.setLevel("debug");
-    this.db = connected.db("");
+    this.db = connected.db("weight-watchers");
     await db.command({ hello: 1 });
 
     console.log("DB Connected!")

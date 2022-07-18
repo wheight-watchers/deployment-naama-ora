@@ -5,7 +5,7 @@ const diary = require('./diary.schema');
 
 const usersSchema = new Schema({
     // id: { type: mongoose.Schema.Types.ObjectId, required: true },
-    password: { type: number, required: true },
+    password: { type: Number, required: true },
     firstName: { type: String, required: true, minlength: 3 },
     lastName: { type: String, required: true, minlength: 3 },
     email: { type: String, required: true },
@@ -13,7 +13,7 @@ const usersSchema = new Schema({
     height: { type: String, required: true },
     age: { type: String, required: true },
     weight: [{
-        startWeight: { type: number },
+        startWeight: { type: Number },
         meetings: [{
             // id: {
             //     type: mongoose.Schema.Types.ObjectId,

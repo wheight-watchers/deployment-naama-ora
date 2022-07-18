@@ -1,3 +1,4 @@
+const express=require('express');
 const controller= require('../MongoControllers/user.MongoController')
 const diaryController=require('../MongoControllers/diary.MongoController')
 
@@ -14,3 +15,5 @@ router.get('/:id/diary',diaryController.getDiaryByUserId);
 router.post('/:id/diary',diaryController.addDiary);
 router.put('/:id/diary/:id',diaryController.updateDiary);
 router.delete('/:id/diary/:id',diaryController.deleteDairy);
+
+module.exports = router;
