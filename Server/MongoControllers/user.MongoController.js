@@ -3,8 +3,8 @@ const { ObjectId } = require('mongodb');
 
 module.exports = {
     getAllUsers: async function (req, res) {
-        const user = await db.getDB().collection("users").find().toArray();
-        res.send(user);
+        const users = await db.getDB().collection("users").find().toArray();
+        res.send(users);
     },
 
     getUserById: async function (req, res) {
@@ -16,7 +16,7 @@ module.exports = {
         if (req.body) {
             const user = req.body;
             const inserted = await db.getDB().collection("users").insertOne(user);
-            res.send(req.body)
+            res.send(inserted)
         }
     },
     updateUserDetails: async function (req, res) {
