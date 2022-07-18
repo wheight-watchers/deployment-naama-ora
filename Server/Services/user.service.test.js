@@ -1,4 +1,3 @@
-
 const UserService = require('./user.service');
 
 test('get user with id 1', () => {
@@ -10,4 +9,4 @@ test('password of user with id 1 to be 1', () => {
     let user =  UserService.getUser("1").then(()=>{
         expect(JSON.parse(user).password).toBe(1);
     })
-    });
+});
