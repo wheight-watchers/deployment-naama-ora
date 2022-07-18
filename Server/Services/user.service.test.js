@@ -1,4 +1,3 @@
-
 const UserService = require('./user.service');
 
 test('get user with id 1', () => {
