@@ -1,17 +1,16 @@
 const express = require("express");
 // const mongoose = require('mongoose');
+const cors = require("cors");
 const db = require('./DB/mongoose')
 const app = express();
-const cors = require("cors");
-// const userRouter = require("./Routes/user.router");
-// const meetingRouter = require("./Routes/meeting.router");
-// const accountRouter = require("./Routes/account.router");
-const userRouter = require("./MongoRoutes/user.MongoRouter");
-const meetingRouter = require("./MongoRoutes/meeting.MongoRouter");
-const accountRouter = require("./MongoRoutes/account.MongoRouter");
+const userRouter = require("./Routes/user.router");
+const meetingRouter = require("./Routes/meeting.router");
+const accountRouter = require("./Routes/account.router");
+const userMongoRouter = require("./MongoRoutes/user.MongoRouter");
+const meetingMongoRouter = require("./MongoRoutes/meeting.MongoRouter");
+const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
 // const authMiddleware = require("./MiddleWare/middleware");
 // const logger = require('./Log/logger');
-const port = process.env.PORT || 3000;
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 let bodyParser = require('body-parser')
@@ -27,18 +26,24 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
 app.use("/users",
-  userRouter);
+  // userRouter
+  userMongoRouter
+  );
 app.use("/meeting",
   //  authMiddleware,
-  meetingRouter);
+  // meetingRouter
+  meetingMongoRouter
+  );
 app.use("/account",
   //  authMiddleware,
-  accountRouter);
+  // accountRouter
+  accountMongoRouter
+  );
 app.use(
   '/api-docs',
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument)
 );
-app.listen(port, () => {
-  console.log(` Hi! process on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(` Hi! process on port ${process.env.PORT}`);
 });

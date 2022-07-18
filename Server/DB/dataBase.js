@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
-const connectionString = "https://safe-tor-83297.herokuapp.com";
-
+const connectionString = "https://localhost:27017/weight-watchers";
 class dataBase {
 
   constructor() {
@@ -14,7 +13,7 @@ class dataBase {
 
     let connected = await client.connect();
     Logger.setLevel("debug");
-    this.db = connected.db("weight-watchers");
+    this.db = connected.db("");
     await db.command({ hello: 1 });
 
     console.log("DB Connected!")
