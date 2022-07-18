@@ -44,7 +44,7 @@ module.exports = {
     })
    
     await updateData(data);
-    return data;
+    return data.users[1].Weights.meetings;
   }
 }
 
