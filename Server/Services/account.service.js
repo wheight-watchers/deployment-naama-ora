@@ -1,9 +1,4 @@
-// const { post } = require("../Controllers/user.controller");
-// const UserModel = require("../models/user.model");
 const fs = require("fs/promises");
-// const { json } = require("body-parser");
-// const dataFromFile = fs.readFileSync("../file.json");
-// myData = JSON.parse(dataFromFile);
 
 const getData = async () =>
   fs.readFile("file.json").then((data) => JSON.parse(data));
@@ -29,8 +24,8 @@ const managerlogin = async (email, password) => {
   if (manager.password == password && manager.email == email) {
     return manager;
   }
- throw new Error(`manager with these details was not found`);
   return null;
+//  throw new Error(`manager with these details was not found`);
 };
 module.exports = {
   userlogin,

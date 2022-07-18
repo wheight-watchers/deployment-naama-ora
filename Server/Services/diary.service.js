@@ -1,10 +1,10 @@
 const fs = require("fs/promises");
 
-const getData = async () => fs.readFile('file.json').then((data) => JSON.parse(data));
+const getData = async () => fs.readFile('Server/file.json').then((data) => JSON.parse(data));
 
 const updateData = async (data) =>
   fs.writeFile(
-    'file.json',
+    'Server/file.json',
     JSON.stringify(data),
     function (err, result) {
       if (err) console.log("error", err);
