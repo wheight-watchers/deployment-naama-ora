@@ -2,8 +2,8 @@ const fs = require("fs/promises");
 const uuid = require("uuid");
 const uuIdv4 = uuid.v4;
 
-
 const getData = async () => fs.readFile('Server/file.json').then((data) => JSON.parse(data));
+
 const updateData = async (data) => fs.writeFile('Server/file.json', JSON.stringify(data), function (err, result) {
   if (err) console.log('error', err);
   else console.log('success', result)
