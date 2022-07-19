@@ -14,20 +14,20 @@ const usersSchema = new Schema({
     age: { type: String, required: true },
     Weights: [{
         startWeight: { type: Number },
-        meetings: [{
+        meetings: [
             // id: {
             //     type: mongoose.Schema.Types.ObjectId,
             //     ref: 'Meeting'
             // }
-            type: [meeting.meetingsSchema]
-        }]
+            {type: meeting.meetingsSchema}
+        ]
     }],
     diary: [{
         // id: {
         //     type: mongoose.Schema.Types.ObjectId,
         //     ref: 'Diary'
         // }
-        type: [diary.diarySchema]
+        type: diary.diarySchema
     }]
 })
 const UsersModel = mongoose.model('users', usersSchema);
