@@ -15,11 +15,16 @@ module.exports = {
         
     },
     addMeeting: async function (req, res) {
-        if (req.body) {
+
+        try{
             const meeting = req.body;
-            const inserted = await db.getDB().collection("users").insertOne(meeting);
+            const inserted = await meetingModel.Weights.meetings.insertOne(meeting);
             res.send(req.body)
         }
+        catch(error){
+            res.status(404).send(`🙄oops ${error}`)
+        }
+       
     },
     deleteMeeting: async function (req, res) {
         const meeting = await db.getDB().collection("users").deleteOne({ _id: ObjectId(req.params.id) });
