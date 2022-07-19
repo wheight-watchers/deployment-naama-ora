@@ -30,7 +30,7 @@ module.exports = {
         try{
             const _id=ObjectId(req.params.id)
             const meeting = await meetingModel.Weights.meetings.deleteOne(_id);
-            res.send(`delete meeting ${meeting}`)
+            res.send(meeting)
         }
         catch(error){
             res.status(404).send(`🙄oops ${error}`)
@@ -38,9 +38,15 @@ module.exports = {
        
     },
     updateMeeting: async function (req, res) {
-        const meetingToUpdate = req.body;
-        const filter = { _id: ObjectId(req.params.id) };
-        const meeting = await db.getDB().collection("users").updateOne(filter, meetingToUpdate);
-        res.send(`user ${meeting} updated!`)
+        try{
+            const meetingToUpdate = req.body;
+            const filter = { _id: ObjectId(req.params.id) };
+            const meeting = await meetingModel.Weights.meetings.updateOne(filter, meetingToUpdate);
+            res.send(meeting)
+        }
+        catch(error){
+            res.status(404).send(`🙄oops ${error}`)
+        }
+      
     }
 }
