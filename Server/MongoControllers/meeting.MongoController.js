@@ -5,8 +5,10 @@ module.exports = {
     getAllTheMeetingsForUser: async (req, res) => {
         try {
             let id = req.params.id;
-            const meeting = await meetingModel.findById(ObjectId(id));
-            res.send(`get meeting ${meeting.Weights.meetings}`)
+            let meeting = await meetingModel.findById(ObjectId(id));
+            meeting=meeting.Weights.meetings
+            
+            res.send(`get meeting ${meeting}`)
         }catch(error){
             res.status(404).send(`🙄oops ${error}`)
         }
