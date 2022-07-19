@@ -16,7 +16,8 @@ module.exports = {
 
     getUserById: async function (req, res) {
         const id = req.params.id;
-        const user = await db.getDB().collection("users").findOne(ObjectId(id));
+        // const user = await db.getDB().collection("users").findOne(ObjectId(id));
+        const user=userModel.findOne(ObjectId(id));
         res.send(`get user ${user}`)
     },
     addUser: async function (req, res) {
