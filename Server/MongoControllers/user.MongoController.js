@@ -1,4 +1,3 @@
-//  const db = require('../DB/mongoose');
 const { ObjectId } = require('mongodb');
 const userModel=require('../Models/users.schema')
 
@@ -6,16 +5,12 @@ module.exports = {
     getAllUsers: async function  (req, res) {
         debugger     
         try {
-            // const users =  await db.getDB().collection("users").find().toArray();   
-            // const users =  await db.collection('users').find({}).toArray();   
             const users=await userModel.find();
-            debugger
             res.send(users);
           } catch (error) {
             res.status(500).send(`oofffffffff ${error}`);
           }
     },
-
     getUserById: async function (req, res) {
         const id = req.params.id;
         // const user = await db.getDB().collection("users").findOne(ObjectId(id));
