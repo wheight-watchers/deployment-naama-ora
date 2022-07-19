@@ -1,52 +1,64 @@
 const { ObjectId } = require('mongodb');
-const MeetingsModel=require('../Models/meetings.schema')
-//const userModel=require('../Models/users.schema')
+//const MeetingsModel=require('../Models/meetings.schema')
+const userModel = require('../Models/users.schema')
 module.exports = {
     getAllTheMeetingsForUser: async (req, res) => {
         try {
             let id = req.params.id;
-            let meeting = await MeetingsModel.findById(ObjectId(id));
-            // meeting=meeting.Weights.meetings
-            
+            const user = await userModel.findById(ObjectId(id));
+            const meeting = user.Weights[0].meetings
+
             res.send(meeting)
-        }catch(error){
+        } catch (error) {
             res.status(404).send(`🙄oops ${error}`)
         }
-        
+
     },
     addMeeting: async function (req, res) {
 
-        try{
+        try {
+            i=0
             const meeting = req.body;
-            const inserted = await MeetingsModel.Weights.meetings.insertOne(meeting);
-            res.send(req.body)
+            let users = await userModel.find();
+            await users.forEach(user => {
+                user.Weights.meetings = [...user.Weights.meetings, meeting[i]]
+                //await userModel.updateOne()
+                i=i+1;
+            })
+
+            let meetingInsert = await userModel.find();
+            res.send(meetingInsert)
         }
-        catch(error){
+        catch (error) {
             res.status(404).send(`🙄oops ${error}`)
         }
-       
+
     },
     deleteMeeting: async function (req, res) {
-        try{
-            const _id=ObjectId(req.params.id)
-            const meeting = await MeetingsModel.Weights.meetings.deleteOne(_id);
-            res.send(meeting)
+        try {
+            const _id = req.params.id
+            let user = await userModel.find();
+            user.forEach((u)=>{
+                userModel.deleteOne()
+                u.Weights[0].meetings.r
+            })          
+           // res.send(meeting)
         }
-        catch(error){
+        catch (error) {
             res.status(404).send(`🙄oops ${error}`)
         }
-       
+
     },
     updateMeeting: async function (req, res) {
-        try{
+        try {
             const meetingToUpdate = req.body;
             const filter = { _id: ObjectId(req.params.id) };
-            const meeting = await MeetingsModel.Weights.meetings.updateOne(filter, meetingToUpdate);
+            const meeting = await userModel.Weights[0].meetings.updateOne(filter, meetingToUpdate);
             res.send(meeting)
         }
-        catch(error){
+        catch (error) {
             res.status(404).send(`🙄oops ${error}`)
         }
-      
+
     }
 }
