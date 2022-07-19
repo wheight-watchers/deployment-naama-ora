@@ -4,7 +4,7 @@ const meeting = require('./meetings.schema')
 const diary = require('./diary.schema');
 
 const usersSchema = new Schema({
-    // id: { type: mongoose.Schema.Types.ObjectId, required: true },
+     id: { type: Number, required: true },
     password: { type: Number, required: true },
     firstName: { type: String, required: true, minlength: 3 },
     lastName: { type: String, required: true, minlength: 3 },
@@ -12,7 +12,7 @@ const usersSchema = new Schema({
     address: [{ city: { type: String }, street: { type: String }, building: { type: String } }],
     height: { type: String, required: true },
     age: { type: String, required: true },
-    weight: [{
+    weights: [{
         startWeight: { type: Number },
         meetings: [{
             // id: {
@@ -30,5 +30,5 @@ const usersSchema = new Schema({
         type: [diary.diarySchema]
     }]
 })
-const UsersModel = mongoose.model('Users', usersSchema);
+const UsersModel = mongoose.model('users', usersSchema);
 module.exports = UsersModel;
