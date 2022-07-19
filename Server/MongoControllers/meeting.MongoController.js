@@ -27,8 +27,15 @@ module.exports = {
        
     },
     deleteMeeting: async function (req, res) {
-        const meeting = await db.getDB().collection("users").deleteOne({ _id: ObjectId(req.params.id) });
-        res.send(`delete user ${meeting}`)
+        try{
+            const _id=ObjectId(req.params.id)
+            const meeting = await meetingModel.Weights.meetings.deleteOne(_id);
+            res.send(`delete meeting ${meeting}`)
+        }
+        catch(error){
+            res.status(404).send(`🙄oops ${error}`)
+        }
+       
     },
     updateMeeting: async function (req, res) {
         const meetingToUpdate = req.body;
