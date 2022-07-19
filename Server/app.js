@@ -15,7 +15,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 let bodyParser = require('body-parser')
 const dotenv = require('dotenv');
-const port=process.env.PORT||3000;
+const port=3000;
 dotenv.config();
 db.connect();
 app.use(cors());

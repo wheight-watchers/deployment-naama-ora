@@ -1,5 +1,7 @@
 const { MongoClient } = require('mongodb');
 const connectionString = "https://localhost:27017/weight-watchers.users";
+// const dotenv = require('dotenv');
+// dotenv.config();
 class dataBase {
 
   constructor() {
@@ -19,6 +21,7 @@ class dataBase {
     console.log("DB Connected!")
   };
   getDB() {
+    debugger;
     return this.db;
   }
 }
