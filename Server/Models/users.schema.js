@@ -4,7 +4,7 @@ const meeting = require('./meetings.schema')
 const diary = require('./diary.schema');
 
 const usersSchema = new Schema({
-     id: { type: Number, required: true },
+    id: { type: Number, required: true },
     password: { type: Number, required: true },
     firstName: { type: String, required: true, minlength: 3 },
     lastName: { type: String, required: true, minlength: 3 },
@@ -19,16 +19,16 @@ const usersSchema = new Schema({
             //     type: mongoose.Schema.Types.ObjectId,
             //     ref: 'Meeting'
             // }
-            {type: meeting.meetingsSchema}
+            { type: meeting.meetingsSchema }
         ]
     }],
-    diary: [{
+    diary: [
         // id: {
         //     type: mongoose.Schema.Types.ObjectId,
         //     ref: 'Diary'
         // }
-        type: diary.diarySchema
-    }]
+        { type: diary.diarySchema }
+    ]
 })
 const UsersModel = mongoose.model('users', usersSchema);
 module.exports = UsersModel;
