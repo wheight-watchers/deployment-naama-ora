@@ -1,14 +1,14 @@
 const { ObjectId } = require('mongodb');
-const meetingModel = require('../Models/users.schema')
-
+const MeetingsModel=require('../Models/meetings.schema')
+//const userModel=require('../Models/users.schema')
 module.exports = {
     getAllTheMeetingsForUser: async (req, res) => {
         try {
             let id = req.params.id;
-            let meeting = await meetingModel.findById(ObjectId(id));
-            meeting=meeting.Weights.meetings
+            let meeting = await MeetingsModel.findById(ObjectId(id));
+            // meeting=meeting.Weights.meetings
             
-            res.send(`get meeting ${meeting}`)
+            res.send(meeting)
         }catch(error){
             res.status(404).send(`🙄oops ${error}`)
         }
@@ -18,7 +18,7 @@ module.exports = {
 
         try{
             const meeting = req.body;
-            const inserted = await meetingModel.Weights.meetings.insertOne(meeting);
+            const inserted = await MeetingsModel.Weights.meetings.insertOne(meeting);
             res.send(req.body)
         }
         catch(error){
@@ -29,7 +29,7 @@ module.exports = {
     deleteMeeting: async function (req, res) {
         try{
             const _id=ObjectId(req.params.id)
-            const meeting = await meetingModel.Weights.meetings.deleteOne(_id);
+            const meeting = await MeetingsModel.Weights.meetings.deleteOne(_id);
             res.send(meeting)
         }
         catch(error){
@@ -41,7 +41,7 @@ module.exports = {
         try{
             const meetingToUpdate = req.body;
             const filter = { _id: ObjectId(req.params.id) };
-            const meeting = await meetingModel.Weights.meetings.updateOne(filter, meetingToUpdate);
+            const meeting = await MeetingsModel.Weights.meetings.updateOne(filter, meetingToUpdate);
             res.send(meeting)
         }
         catch(error){
