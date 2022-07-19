@@ -11,7 +11,6 @@ module.exports = {
           }
     },
     getUserById: async function (req, res) {
-        debugger
         const id = req.params.id;
         // const user = await db.getDB().collection("users").findOne(ObjectId(id));
         const user= await userModel.findOne({id:id});
