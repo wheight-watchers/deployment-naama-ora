@@ -10,5 +10,5 @@ const diarySchema = new Schema({
     IntermediateSnack: { type: [String] }
  }
 })
-const DiaryModel = mongoose.model('Diary', diarySchema);
+const DiaryModel = mongoose.model('diaries', diarySchema);
 module.exports = { DiaryModel, diarySchema };

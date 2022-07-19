@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb');
-const meetingModel = require('../Models/users.schema')
+const meetingModel = require('../Models/meetings.schema')
 
 module.exports = {
     getAllTheMeetingsForUser: async (req, res) => {

@@ -1,26 +1,29 @@
 const { ObjectId } = require('mongodb');
-const userModel=require('../Models/users.schema')
+const userModel = require('../Models/users.schema')
 
 module.exports = {
-    getAllUsers: async function  (req, res) {   
+    getAllUsers: async function (req, res) {
         try {
-            const users=await userModel.find();
+            const users = await userModel.find();
             res.send(users);
-          } catch (error) {
+        } catch (error) {
             res.status(500).send(`oofffffffff ${error}`);
-          }
+        }
     },
     getUserById: async function (req, res) {
         const id = req.params.id;
-        // const user = await db.getDB().collection("users").findOne(ObjectId(id));
-        const user= await userModel.findOne({id:id});
+        const user = await userModel.findOne({ id: id });
         res.send(user);
     },
     addUser: async function (req, res) {
+        debugger
         if (req.body) {
-            const user = req.body;
-            const inserted = await db.getDB().collection("users").insertOne(user);
-            res.send(inserted)
+            try {
+                await userModel.create(req.body);
+                res.send(req.body)
+            } catch (error) {
+                res.status(500).send(`oofffffffff ${error}`);
+            }
         }
     },
     updateUserDetails: async function (req, res) {
