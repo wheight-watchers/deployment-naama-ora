@@ -10,7 +10,7 @@ module.exports = {
 
             res.send(meeting)
         } catch (error) {
-            res.status(404).send(`🙄oops ${error}`)
+            res.send(`🙄oops ${error}`)
         }
 
     },
@@ -30,7 +30,7 @@ module.exports = {
             res.send(meetingInsert)
         }
         catch (error) {
-            res.status(404).send(`🙄oops ${error}`)
+            res.send(`🙄oops ${error}`)
         }
 
     },
