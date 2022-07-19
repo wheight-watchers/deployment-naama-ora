@@ -37,12 +37,13 @@ module.exports = {
     deleteMeeting: async function (req, res) {
         try {
             const _id = req.params.id
-            let user = await userModel.find();
-            user.forEach((u)=>{
-                userModel.deleteOne()
-                u.Weights[0].meetings.r
-            })          
-           // res.send(meeting)
+            let users = await userModel.find();
+             users.forEach  (async (u)=>{
+                await userModel.deleteOne( u.Weights[0].meetings._id)
+               // u.Weights[0].meetings.r
+            })        
+            let usersM = await userModel.find();  
+            res.send(usersM)
         }
         catch (error) {
             res.status(404).send(`🙄oops ${error}`)
