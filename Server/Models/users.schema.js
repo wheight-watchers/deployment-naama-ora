@@ -12,7 +12,7 @@ const usersSchema = new Schema({
     address: [{ city: { type: String }, street: { type: String }, building: { type: String } }],
     height: { type: String, required: true },
     age: { type: String, required: true },
-    weights: [{
+    Weights: [{
         startWeight: { type: Number },
         meetings: [{
             // id: {

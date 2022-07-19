@@ -2,8 +2,7 @@ const { ObjectId } = require('mongodb');
 const userModel=require('../Models/users.schema')
 
 module.exports = {
-    getAllUsers: async function  (req, res) {
-        debugger     
+    getAllUsers: async function  (req, res) {   
         try {
             const users=await userModel.find();
             res.send(users);
@@ -12,10 +11,11 @@ module.exports = {
           }
     },
     getUserById: async function (req, res) {
+        debugger
         const id = req.params.id;
         // const user = await db.getDB().collection("users").findOne(ObjectId(id));
-        const user=userModel.findOne(ObjectId(id));
-        res.send(`get user ${user}`)
+        const user= await userModel.findOne({id:id});
+        res.send(user);
     },
     addUser: async function (req, res) {
         if (req.body) {
