@@ -95,9 +95,9 @@ describe("users with mongo", () => {
 // describe("Users with Mongo test", () => {
 //     test('get all users', () => {
 
-        // sinon.stub(UsersModel, 'findOne').returns(userObject);
-        // const returnedUser = await userController.getUserById(id);
-        // expect(returnedUser.firstName).toequal(userObject.firstName);
+//         // sinon.stub(UsersModel, 'findOne').returns(userObject);
+//         // const returnedUser = await userController.getUserById(id);
+//         // expect(returnedUser.firstName).toequal(userObject.firstName);
 
         // const users = [{name: 'Bob'}];
         // const resp = {data: users};
