@@ -9,6 +9,8 @@ const accountRouter = require("./Routes/account.router");
 const userMongoRouter = require("./MongoRoutes/user.MongoRouter");
 const meetingMongoRouter = require("./MongoRoutes/meeting.MongoRouter");
 const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
+const diaryMongoRouter= require("./MongoRoutes/diary.MongoRouter");
+
 // const authMiddleware = require("./MiddleWare/middleware");
 // const logger = require('./Log/logger');
 const swaggerUi = require('swagger-ui-express');
@@ -39,6 +41,10 @@ app.use("/account",
   //  authMiddleware,
   // accountRouter
   accountMongoRouter
+  );
+  app.use("/diary",
+  //  authMiddleware,
+  diaryMongoRouter
   );
 app.use(
   '/api-docs',
