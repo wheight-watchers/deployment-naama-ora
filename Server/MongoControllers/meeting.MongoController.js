@@ -36,14 +36,15 @@ module.exports = {
     },
     deleteMeeting: async function (req, res) {
         try {
-            const _id = req.params.id
+            // const _id = req.params.id
             let users = await userModel.find();
-             users.forEach  (async (u)=>{
-                await userModel.deleteOne( u.Weights[0].meetings._id)
+             users.forEach  (async (user)=>{
+                await user.Weights[0].deleteOne({ _id: ObjectId(req.params.id) })
+                // .deleteOne( user.Weights[0].meetings._id)
                // u.Weights[0].meetings.r
             })        
-            let usersM = await userModel.find();  
-            res.send(usersM)
+            let updateUsers = await userModel.find();  
+            res.send(updateUsers)
         }
         catch (error) {
             res.status(404).send(`🙄oops ${error}`)
@@ -51,11 +52,12 @@ module.exports = {
 
     },
     updateMeeting: async function (req, res) {
+        debugger
         try {
             const meetingToUpdate = req.body;
             const filter = { _id: ObjectId(req.params.id) };
-            const meeting = await userModel.Weights[0].meetings.updateOne(filter, meetingToUpdate);
-            res.send(meeting)
+            await userModel.updateOne(filter, meetingToUpdate);
+            res.send("was update")
         }
         catch (error) {
             res.status(404).send(`🙄oops ${error}`)

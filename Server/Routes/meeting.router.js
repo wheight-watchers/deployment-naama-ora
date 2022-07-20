@@ -8,4 +8,4 @@ router.post('/',controller.addMeeting);
 router.put('/:id',controller.updateMeeting);
 router.delete('/:id',controller.deleteMeeting);
 
-module.exports=router;
+module.exports=router; 
