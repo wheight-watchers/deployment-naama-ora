@@ -51,6 +51,27 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument)
 );
+
+const { auth } = require('express-openid-connect');
+
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: process.env.AUTH0_CLIENT_SECRET,
+  baseURL: 'http://127.0.0.1:5500',
+  clientID: process.env.AUTH0_CLIENT_ID,
+  issuerBaseURL: 'https://dev-m0ma1edt.us.auth0.com'
+};
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+
 app.listen(port, () => {
   console.log(` Hi! process on port ${port}`);
 });
