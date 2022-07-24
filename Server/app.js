@@ -43,7 +43,7 @@ const config = {
 app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
+app.get('/', userRouter,(req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
@@ -146,7 +146,7 @@ app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
 app.use("/users",
   // userRouter
-   requiresAuth(),
+  //  requiresAuth(),
   userMongoRouter
   );
 app.use("/meeting",
