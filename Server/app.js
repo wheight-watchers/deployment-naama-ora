@@ -26,7 +26,7 @@ const path = require("path");
 const expressSession = require("express-session");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
-
+const url= new URL(`http://127.0.0.1:5500/`)
 dotenv.config();
 db.connect();
 
@@ -44,7 +44,11 @@ app.use(auth(config));
 app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
 app.get('/',(req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  if(req.oidc.isAuthenticated()){
+    req.cookies(req.cookies);
+    req.send(req.redirect(url))
+  }
+ // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.use(cors());
