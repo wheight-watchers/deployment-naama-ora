@@ -38,7 +38,7 @@ const config = {
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: 'https://dev-vykvjfcp.us.auth0.com'
 };
-const url=`http://127.0.0.1:5500`
+const url=`http://127.0.0.1:5500/Client/Manager.html`
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
