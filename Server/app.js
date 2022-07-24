@@ -17,7 +17,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 let bodyParser = require('body-parser')
 const dotenv = require('dotenv');
-
+const { requiresAuth } = require('express-openid-connect');
 // const unless = require('express-unless')
 // const { requiresAuth } = require('express-openid-connect');
 
@@ -41,7 +41,7 @@ const config = {
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
-
+app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
@@ -60,14 +60,6 @@ const secured = (req, res, next) => {
   res.redirect("/login");
 };
 
-
-// auth.authenticateToken.unless = unless
-// app.use(auth.authenticateToken.unless({
-//     path: [
-//         { url: '/users/login', methods: ['POST']},
-//         { url: '/users/register', methods: ['POST']}
-//     ]
-// }))
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -134,7 +126,7 @@ app.get("/users", secured, (req, res, next) => {
   });
 });
 
-const { requiresAuth } = require('express-openid-connect');
+
 
 
 
