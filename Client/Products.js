@@ -1,3 +1,7 @@
+function back(){
+   debugger;
+  window.location.href='../index.html';
+}
 function searchProducts() {
   document.getElementById("load").style.display = "block";
   document.getElementById("resultAutomatic").innerHTML = "";

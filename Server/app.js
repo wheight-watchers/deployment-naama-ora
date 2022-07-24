@@ -43,7 +43,7 @@ const config = {
 app.use(auth(config));
 app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
-app.get('/', userRouter,(req, res) => {
+app.get('/',(req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
@@ -136,11 +136,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
-app.use("/users",
-  // userRouter
-  //  requiresAuth(),
-  userMongoRouter
-  );
+
 app.use("/meeting",
   //  authMiddleware,
   // meetingRouter
