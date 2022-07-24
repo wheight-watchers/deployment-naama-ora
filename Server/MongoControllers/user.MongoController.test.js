@@ -10,7 +10,6 @@ describe("users with mongo", () => {
     //   });
 
     it('should insert a user into users table', async () => {
-        jest.setTimeout(10 * 1000);
         const users = await UsersModel.find();
         const mockUser = {
             "id": 6,

@@ -10,6 +10,8 @@ const userMongoRouter = require("./MongoRoutes/user.MongoRouter");
 const meetingMongoRouter = require("./MongoRoutes/meeting.MongoRouter");
 const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
 const diaryMongoRouter= require("./MongoRoutes/diary.MongoRouter");
+const authRouter = require("./auth");
+
 // const authMiddleware = require("./MiddleWare/middleware");
 // const logger = require('./Log/logger');
 const swaggerUi = require('swagger-ui-express');
@@ -21,12 +23,10 @@ const dotenv = require('dotenv');
 // const { requiresAuth } = require('express-openid-connect');
 
 const { auth } = require('express-openid-connect');
-
 const path = require("path");
 const expressSession = require("express-session");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
-const authRouter = require("./auth");
 
 dotenv.config();
 db.connect();
@@ -46,6 +46,14 @@ const config = {
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+
+const secured = (req, res, next) => {
+  if (req.user) {
+    return next();
+  }
+  req.session.returnTo = req.originalUrl;
+  res.redirect("/login");
+};
 
 // req.isAuthenticated is provided from the auth router
 app.get('/', (req, res) => {
@@ -117,6 +125,20 @@ if (app.get("env") === "production") {
   session.cookie.secure = true;
 }
 
+app.get("/users", secured, (req, res, next) => {
+  const { _raw, _json, ...userProfile } = req.user;
+  res.render("user", {
+    title: "Profile",
+    userProfile: userProfile
+  });
+});
+
+const { requiresAuth } = require('express-openid-connect');
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
+
 // app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -125,6 +147,7 @@ app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
 app.use("/users",
   // userRouter
+   requiresAuth(),
   userMongoRouter
   );
 app.use("/meeting",
