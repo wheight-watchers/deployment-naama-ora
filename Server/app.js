@@ -11,7 +11,6 @@ const meetingMongoRouter = require("./MongoRoutes/meeting.MongoRouter");
 const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
 const diaryMongoRouter= require("./MongoRoutes/diary.MongoRouter");
 const authRouter = require("./auth");
-
 // const authMiddleware = require("./MiddleWare/middleware");
 // const logger = require('./Log/logger');
 const swaggerUi = require('swagger-ui-express');
@@ -30,22 +29,28 @@ const Auth0Strategy = require("passport-auth0");
 
 dotenv.config();
 db.connect();
-app.use(cors());
-app.use(express.json());
-
-const port=process.env.PORT || 3000;
 
 const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.AUTH0_CLIENT_SECRET,
-  baseURL: 'http://127.0.0.1:5500',
+  baseURL: 'http://localhost:3000',
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: 'https://dev-vykvjfcp.us.auth0.com'
 };
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+});
+
+app.use(cors());
+app.use(express.json());
+
+const port=process.env.PORT || 3000;
 
 const secured = (req, res, next) => {
   if (req.user) {
@@ -55,10 +60,6 @@ const secured = (req, res, next) => {
   res.redirect("/login");
 };
 
-// req.isAuthenticated is provided from the auth router
-app.get('/', (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
-});
 
 // auth.authenticateToken.unless = unless
 // app.use(auth.authenticateToken.unless({
@@ -135,9 +136,7 @@ app.get("/users", secured, (req, res, next) => {
 
 const { requiresAuth } = require('express-openid-connect');
 
-app.get('/profile', requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
-});
+
 
 // app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({
@@ -169,6 +168,10 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(swaggerDocument)
 );
+
+app.get('/profile', requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
 
 app.listen(port, () => {
   console.log(` Hi! process on port ${port}`);
