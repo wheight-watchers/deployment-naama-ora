@@ -26,7 +26,7 @@ const path = require("path");
 const expressSession = require("express-session");
 const passport = require("passport");
 const Auth0Strategy = require("passport-auth0");
-const url= new URL(`http://127.0.0.1:5500/`)
+
 dotenv.config();
 db.connect();
 
@@ -38,20 +38,22 @@ const config = {
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: 'https://dev-vykvjfcp.us.auth0.com'
 };
+const url=`http://127.0.0.1:5500`
 
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
 app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
 app.get('/',(req, res) => {
-  // if(req.oidc.isAuthenticated()){
-  //   //req.cookies(req.cookies);
-  //   req.send(req.redirect(url))
-  // }
-  // else{
-  //   req.send('log out')
-  // }
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+ 
+  if(req.oidc.isAuthenticated()){
+   // res.cookies(req.cookies);
+    res.redirect(url)
+  }
+  else{
+    res.send('log out')
+  }
+ // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.use(cors());
