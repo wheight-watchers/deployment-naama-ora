@@ -9,7 +9,7 @@ const accountRouter = require("./Routes/account.router");
 const userMongoRouter = require("./MongoRoutes/user.MongoRouter");
 const meetingMongoRouter = require("./MongoRoutes/meeting.MongoRouter");
 const accountMongoRouter = require("./MongoRoutes/account.MongoRouter");
-const diaryMongoRouter= require("./MongoRoutes/diary.MongoRouter");
+const diaryMongoRouter = require("./MongoRoutes/diary.MongoRouter");
 const authRouter = require("./auth");
 // const authMiddleware = require("./MiddleWare/middleware");
 // const logger = require('./Log/logger');
@@ -38,19 +38,62 @@ const config = {
   clientID: process.env.AUTH0_CLIENT_ID,
   issuerBaseURL: 'https://dev-vykvjfcp.us.auth0.com'
 };
-
+const ClientUrl = 'http://127.0.0.1:5500/Client/Product.html'
 // auth router attaches /login, /logout, and /callback routes to the baseURL
 app.use(auth(config));
-app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
-app.get('/',(req, res) => {
-  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+app.use("/users",
+  requiresAuth(),
+  userMongoRouter
+);
+app.use("/meeting",
+  //  authMiddleware,
+  requiresAuth(),
+  meetingRouter
+  // meetingMongoRouter
+);
+app.use("/account",
+  //  authMiddleware,
+  // accountRouter
+  requiresAuth(),
+  accountMongoRouter
+);
+// app.use("/diary",
+//   //  authMiddleware,
+//   requiresAuth(),
+//   // diaryMongoRouter
+// );
+app.use("/",
+  //  requiresAuth(),
+  authRouter
+);
+
+app.get('/', (req, res) => {
+  if (req.oidc.isAuthenticated()) {
+      res.cookie(req.cookie);
+     res.send(res.redirect(ClientUrl));
+    // res.send('Logged in')
+  } else {
+    res.send('Logged out')
+  }
+  console.log(JSON.stringify(req.oidc.user));
+  // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
+
+// app.use('/', (req, res, next) => {
+//   if (req.oidc.isAuthenticated()) {
+//     next();
+//   }
+//   else {
+//     res.status(401).send();
+//     res
+//   }
+// })
 
 app.use(cors());
 app.use(express.json());
 
-const port=process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const secured = (req, res, next) => {
   if (req.user) {
@@ -79,7 +122,7 @@ const strategy = new Auth0Strategy(
     clientSecret: process.env.AUTH0_CLIENT_SECRET,
     callbackURL: process.env.AUTH0_CALLBACK_URL
   },
-  function(accessToken, refreshToken, extraParams, profile, done) {
+  function (accessToken, refreshToken, extraParams, profile, done) {
     /**
      * Access tokens are used to authorize users to an API
      * (resource server)
@@ -111,7 +154,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/", authRouter);
 
 if (app.get("env") === "production") {
   // Serve secure cookies, requires HTTPS
@@ -126,10 +168,6 @@ app.get("/users", secured, (req, res, next) => {
   });
 });
 
-
-
-
-
 // app.use(express.urlencoded());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -137,20 +175,6 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 // app.use("/manager", managerRouter);
 
-app.use("/meeting",
-  //  authMiddleware,
-  // meetingRouter
-  meetingMongoRouter
-  );
-app.use("/account",
-  //  authMiddleware,
-  // accountRouter
-  accountMongoRouter
-  );
-  app.use("/diary",
-  //  authMiddleware,
-  diaryMongoRouter
-  );
 app.use(
   '/api-docs',
   swaggerUi.serve,
