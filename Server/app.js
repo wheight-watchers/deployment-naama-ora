@@ -44,11 +44,14 @@ app.use(auth(config));
 app.use('/users', requiresAuth(), userMongoRouter);
 // req.isAuthenticated is provided from the auth router
 app.get('/',(req, res) => {
-  if(req.oidc.isAuthenticated()){
-    req.cookies(req.cookies);
-    req.send(req.redirect(url))
-  }
- // res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+  // if(req.oidc.isAuthenticated()){
+  //   //req.cookies(req.cookies);
+  //   req.send(req.redirect(url))
+  // }
+  // else{
+  //   req.send('log out')
+  // }
+  res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
 
 app.use(cors());
