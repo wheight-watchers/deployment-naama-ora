@@ -1,5 +1,5 @@
 const express= require('express');
-const controller=require('../Controllers/meeting.controller')
+const controller=require('../MongoControllers/meeting.MongoController')
 
 const router=express.Router();
 
@@ -8,4 +8,4 @@ router.post('/',controller.addMeeting);
 router.put('/:id',controller.updateMeeting);
 router.delete('/:id',controller.deleteMeeting);
 
-module.exports=router; 
+module.exports = router;

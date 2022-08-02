@@ -1,15 +1,22 @@
 let start = 0;
-const configUrl = "http://localhost:3000/users";
-function getParams() {
+const getAllUser = new URL("https://safe-tor-83297.herokuapp.com/users");
+async function returnAllUser() {
+  debugger;
+  try {
+    let res = await fetch(getAllUser);
+    return res.json();
+  } catch (error) {
+    alert(error);
+  }
+}
+async function getParams() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", configUrl);
-  xhr.send();
-  xhr.onload = () => {
-    let users = JSON.parse(xhr.responseText);
-    CurrentUser = users.find((u) => u.id == id);
+  const getUser = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
+  try {
+    const response = await fetch(getUser);
+    const CurrentUser = await response.json();
     document.getElementById(
       "userDetails"
     ).innerHTML += `<h1>${CurrentUser.firstName} details</h1>`;
@@ -42,69 +49,53 @@ function getParams() {
     });
     table += `</table>`;
     document.getElementById("userDetails").innerHTML += table;
-  };
+  } catch (error) {
+    alert(error);
+  }
 }
-function getUsersForManager() {
-  if (start == 0) {
+async function getUsersForManager() {
+  debugger;
+  if (start === 0) {
     debugger;
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", configUrl);
-    xhr.send();
-    xhr.onload = () => {
-      if (xhr.status != 200) {
-        alert(`Error ${xhr.status}: ${xhr.statusText}`);
-      } else {
-        debugger;
-        let jsonusers = JSON.parse(xhr.responseText);
-        let userMeetings = jsonusers[0].Weights.meetings;
-        numOfmeetings = Object.keys(userMeetings).length;
-        console.log(jsonusers);
-        let cities = [];
-        let ind = 0;
-        jsonusers.forEach((u, i) => {
-          debugger;
-          let CITY = JSON.stringify(u.address.city).replace(/"/g, "");
-          // alert(`${i} -> ${CITY}`);
-          let found = cities.indexOf(CITY) > -1;
-          if (!found) {
-            cities[ind] = CITY;
-            ind += 1;
-          }
-        });
-        const city = document.getElementById("citySelect");
-        const street = document.getElementById("streetSelect");
-        let index = 1;
-        city.options[0] = new Option("city", 0);
-        street.options[0] = new Option("street", 0);
-        cities.forEach((c, i) => {
-          debugger;
-          // alert(`${i} -> ${c}`);
-          city.options[i + 1] = new Option(c, i + 1);
-          jsonusers.forEach((j, ind) => {
-            debugger;
-            if (j.address.city == c) {
-              debugger;
-              let STREET = JSON.stringify(j.address.street).replace(/"/g, "");
-              street.options[index] = new Option(STREET, index);
-              index += 1;
-            }
-          });
-        });
-        start += 1;
-        document.getElementById("allUsers").innerHTML = "";
-        // document
-        //   .getElementById("allUsers")
-        //   .append(
-        showUsers(jsonusers, numOfmeetings);
-        // );
+    const allUser = await returnAllUser();
+    let userMeetings = allUser[0].Weights.meetings;
+    numOfMeetings = Object.keys(userMeetings).length;
+    let cities = [];
+    let ind = 0;
+    allUser.forEach((u, i) => {
+      debugger;
+      let CITY = JSON.stringify(u.address.city).replace(/"/g, "");
+      let found = cities.indexOf(CITY) > -1;
+      if (!found) {
+        cities[ind] = CITY;
+        ind += 1;
       }
-    };
+    });
+    const city = document.getElementById("citySelect");
+    const street = document.getElementById("streetSelect");
+    let index = 1;
+    city.options[0] = new Option("city", 0);
+    street.options[0] = new Option("street", 0);
+    cities.forEach((c, i) => {
+      debugger;
+      city.options[i + 1] = new Option(c, i + 1);
+      allUser.forEach((j, ind) => {
+        debugger;
+        if (j.address.city === c) {
+          debugger;
+          let STREET = JSON.stringify(j.address.street).replace(/"/g, "");
+          street.options[index] = new Option(STREET, index);
+          index += 1;
+        }
+      });
+    });
+    start += 1;
+    document.getElementById("allUsers").innerHTML = "";
+    showUsers(allUser, numOfMeetings);
   }
 }
 function showUsers(jsonusers, numOfmeetings) {
   debugger;
-  // let container = document.createElement("div");
-  // container.id="container"
   let i = 0;
   let bmi;
   if (jsonusers == [])
@@ -117,7 +108,6 @@ function showUsers(jsonusers, numOfmeetings) {
     lastBmi =
       user.Weights.meetings[numOfmeetings - 2].weight / user.height ** 2;
     let containerUser = document.createElement("div");
-    // containerUser.id="containerUser";
     containerUser.innerHTML = "";
     const para = document.createElement("p");
     const buttons = document.createElement("button");
@@ -131,11 +121,9 @@ function showUsers(jsonusers, numOfmeetings) {
     if (bmi < lastBmi) para.style.color = "green";
     else para.style.color = "red";
     txt.innerHTML = `<h3>${user.firstName + " " + user.lastName}</h3>`;
-    // container.append(`${user.firstName + " " + user.lastName}`);
     para.innerHTML = "CURRENT BMI : " + bmi;
     containerUser.appendChild(txt);
     containerUser.appendChild(para);
-    // document.getElementById("allUsers").innerHTML += "START BMI : " + (user.Weights.startWeight / (user.height * user.height)) + `</br>`
     containerUser.appendChild(buttons);
     let allUsers = document.getElementById("allUsers");
     allUsers.appendChild(containerUser);
@@ -155,73 +143,52 @@ function showUsers(jsonusers, numOfmeetings) {
     );
   });
   start += 1;
-  // return container;
 }
 function directMyDetails(user) {
-  debugger;
-  // let url = new URL("localHost:8080/Details.html");
-  // url.searchParams.set("id", user.id);
-  // window.location.href =url.href;
-
   window.location.href = `Details.html?userId=${user.id}`;
 }
-function filterUsers() {
+async function filterUsers() {
   debugger;
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", configUrl);
-  xhr.send();
-  xhr.onloadend = () => {
-    if (xhr.status != 200) {
-      alert(`Error ${xhr.status}: ${xhr.statusText}`);
-    } else {
-      // alert(JSON.parse(xhr.responseText));
-      const text = document.getElementById("searchByFreeTextInput").value;
-      let biggerThanWeight =
-        document.getElementById("biggerThanWeight").valueAsNumber;
-      let lowerThanWeight =
-        document.getElementById("lowerThanWeight").valueAsNumber;
-      const lostOrGained = document.getElementById("select_lost/gained").value;
-      const from = document.getElementById("select_from").value;
-      let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
-      let biggerThanBMI =
-        document.getElementById("biggerThanBMI").valueAsNumber;
-      const s = document.getElementById("streetSelect");
-      const streetSelect = s.options[s.selectedIndex].outerText;
-      const c = document.getElementById("citySelect");
-      const citySelect = c.options[c.selectedIndex].outerText;
-      let users = JSON.parse(xhr.responseText);
-      let userMeetings = users[0].Weights.meetings;
-      numOfmeetings = Object.keys(userMeetings).length;
-      debugger;
-      if (text != "") {
-        users = filterByText(users, text);
-      }
-      if (biggerThanWeight || lowerThanWeight) {
-        if (!biggerThanWeight) biggerThanWeight = 0;
-        if (!lowerThanWeight) lowerThanWeight = 200;
-        users = filterByWeight(users, biggerThanWeight, lowerThanWeight);
-      }
-      if (lostOrGained != "lost/gained" && from != "from") {
-        users = filterByGainedOrLost(users, lostOrGained, from, numOfmeetings);
-      }
-      if (lowerThanBMI != "" || biggerThanBMI != "") {
-        debugger;
-        if (!lowerThanBMI) lowerThanBMI = 200;
-        if (!biggerThanBMI) biggerThanBMI = 0;
-        users = filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings);
-      }
-      if (streetSelect != "street" || citySelect != "city") {
-        users = filterByAddress(users, citySelect, streetSelect);
-      }
 
-      document.getElementById("allUsers").innerHTML = "";
-      // document
-      //   .getElementById("allUsers")
-      //   .append(
-      showUsers(users, numOfmeetings);
-      // );
-    }
-  };
+  const text = document.getElementById("searchByFreeTextInput").value;
+  let biggerThanWeight =
+    document.getElementById("biggerThanWeight").valueAsNumber;
+  let lowerThanWeight =
+    document.getElementById("lowerThanWeight").valueAsNumber;
+  const lostOrGained = document.getElementById("select_lost/gained").value;
+  const from = document.getElementById("select_from").value;
+  let lowerThanBMI = document.getElementById("lowerThanBMI").valueAsNumber;
+  let biggerThanBMI = document.getElementById("biggerThanBMI").valueAsNumber;
+  const s = document.getElementById("streetSelect");
+  const streetSelect = s.options[s.selectedIndex].outerText;
+  const c = document.getElementById("citySelect");
+  const citySelect = c.options[c.selectedIndex].outerText;
+  let users = await returnAllUser();
+  let userMeetings = users[0].Weights.meetings;
+  numOfmeetings = Object.keys(userMeetings).length;
+  debugger;
+  if (text !== "") {
+    users = filterByText(users, text);
+  }
+  if (biggerThanWeight || lowerThanWeight) {
+    if (!biggerThanWeight) biggerThanWeight = 0;
+    if (!lowerThanWeight) lowerThanWeight = 200;
+    users = filterByWeight(users, biggerThanWeight, lowerThanWeight);
+  }
+  if (lostOrGained !== "lost/gained" && from !== "from") {
+    users = filterByGainedOrLost(users, lostOrGained, from, numOfmeetings);
+  }
+  if (lowerThanBMI !== "" || biggerThanBMI !== "") {
+    debugger;
+    if (!lowerThanBMI) lowerThanBMI = 200;
+    if (!biggerThanBMI) biggerThanBMI = 0;
+    users = filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings);
+  }
+  if (streetSelect !== "street" || citySelect !== "city") {
+    users = filterByAddress(users, citySelect, streetSelect);
+  }
+  document.getElementById("allUsers").innerHTML = "";
+  showUsers(users, numOfmeetings);
 }
 function filterByText(users, text) {
   users = users.filter((u) => {
@@ -247,8 +214,8 @@ function filterByWeight(users, biggerThanWeight, lowerThanWeight) {
   return users;
 }
 function filterByGainedOrLost(users, lostOrGained, from, numOfmeetings) {
-  if (lostOrGained == "lost_weight") {
-    if (from == "from_the_last_week") {
+  if (lostOrGained === "lost_weight") {
+    if (from === "from_the_last_week") {
       users = users.filter((u) => {
         let currentWheight = u.Weights.meetings[numOfmeetings - 1].weight;
         let lastWheight = u.Weights.meetings[numOfmeetings - 2].weight;
@@ -262,7 +229,7 @@ function filterByGainedOrLost(users, lostOrGained, from, numOfmeetings) {
       });
     }
   } else {
-    if (from == "from_the_last_week") {
+    if (from === "from_the_last_week") {
       users = users.filter((u) => {
         return (
           u.Weights.meetings[numOfmeetings - 1].weight >
@@ -290,18 +257,15 @@ function filterByBMI(users, biggerThanBMI, lowerThanBMI, numOfmeetings) {
 }
 function filterByAddress(users, citySelect, streetSelect) {
   users = users.filter((u) => {
-    return u.address.city == citySelect;
+    return u.address.city === citySelect;
   });
-  if (streetSelect != "street") {
+  if (streetSelect !== "street") {
     users = users.filter((u) => {
-      return u.address.street == streetSelect;
+      return u.address.street === streetSelect;
     });
   }
   return users;
 }
-
-function newMeeting() {}
-// window.onload=getUsersForManager();
 
 function directToMeetings() {
   debugger;

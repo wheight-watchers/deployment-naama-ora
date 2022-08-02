@@ -1,8 +1,7 @@
-async function getUsers() {
-  let url = "http://localhost:3000/users";
+async function getUsers(id) {
+  const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
   try {
     let res = await fetch(url);
-    //we have to add here a configuration to users
     return await res.json();
   } catch (error) {
     alert(error);
@@ -13,9 +12,8 @@ async function userDetails() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
   debugger;
-  let users = await getUsers();
-  const CurrentUser = users.find((u) => u.id == id);
-  // alert(CurrentUser);
+  const CurrentUser = await getUsers(id);
+
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -26,7 +24,6 @@ async function userDetails() {
   let value9 = CurrentUser.height;
   let value10 = CurrentUser.Weights.startWeight;
   let meet = CurrentUser.Weights.meetings;
-  // console.log(meet);
   meet.forEach((m) => {
     debugger;
 
@@ -62,18 +59,13 @@ function directToEditdetails() {
 }
 function directToProducts() {
   debugger;
-  window.location.href = "src/Product.html";
+  window.location.href = "../Client/Product.html";
 }
 async function edit() {
   debugger;
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  // const res = await fetch("../db-1655750686617.json");
-  const res = await fetch("http://localhost:3000/users");
-  const users = await res.json();
-  CurrentUser = users.find((u) => u.id == id);
-  // let myData = localStorage["cu"];
-  // localStorage.clear();
+  const CurrentUser = await getUsers(id);
   let value1 = CurrentUser.firstName;
   let value2 = CurrentUser.lastName;
   let value3 = CurrentUser.email;
@@ -82,7 +74,6 @@ async function edit() {
   let value7 = CurrentUser.address.building;
   let value8 = CurrentUser.age;
   let value9 = CurrentUser.height;
-
   document.getElementById("name").nameInput += "hello " + value1;
   document.getElementById("nameInput").value = value1;
   document.getElementById("lastNameInput").value = value2;
@@ -96,13 +87,11 @@ async function edit() {
 
 async function saveYourDetails() {
   debugger;
-
   const params = new URLSearchParams(window.location.search);
   const id = params.get("userId");
-  const users = await fetch("http://localhost:3000/users").then((res => {
-    return res.json();
-  }))
-  CurrentUser = users.find((u) => u.id == id);
+  const CurrentUser = await getUsers(id);
+  const url = new URL(`https://safe-tor-83297.herokuapp.com/users/${id}`);
+  debugger;
   let firstName = document.getElementById("nameInput").value;
   let lastName = document.getElementById("lastNameInput").value;
   let email = document.getElementById("emailInput").value;
@@ -111,14 +100,10 @@ async function saveYourDetails() {
   let building = document.getElementById("addressBuildingInput").value;
   let age = document.getElementById("ageInput").value;
   let height = document.getElementById("heightInput").value;
-
-
-
-
   debugger
   const data =
   {
-    id: CurrentUser.id,
+    "id": CurrentUser.id,
     "firstName": firstName,
     "lastName": lastName,
     "email": email,
@@ -132,30 +117,19 @@ async function saveYourDetails() {
     "Weights": CurrentUser.Weights,
     "diary": CurrentUser.diary
   }
-
-
-  fetch(`http://localhost:3000/users/${id}`, {
-
-    method: 'PUT',
-
-    body: JSON.stringify(data),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-
-    .then((data) => {
-      console.log('Success:', data);
-      window.location.href = `User.html?userId=${id}`;
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
-
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-
-
-
+    window.location.href = `User.html?userId=${CurrentUser.id}`;
+  } 
+  catch (err) {
+    alert(err)
   }
+}
 
 

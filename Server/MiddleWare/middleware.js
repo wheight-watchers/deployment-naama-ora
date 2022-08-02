@@ -1,5 +1,5 @@
 const authMiddleware = async (req, res, next) => {
-    const token =
+  const token =
     req.body.token || req.query.token || req.headers["x-access-token"] || req.headers['authorization'].split(' ').pop();
 
   if (!token) {

@@ -1,28 +1,34 @@
-// const { post } = require("../Controllers/user.controller");
-// const UserModel = require("../models/user.model");
-const fs = require("fs");
-// const { json } = require("body-parser");
-// const dataFromFile = fs.readFileSync("../file.json");
-// myData = JSON.parse(dataFromFile);
+const fs = require("fs/promises");
 
 const getData = async () =>
-  fs.readFile("deployment-racheli-naama-ora/file.json").then((data) => JSON.parse(data));
-const updateData = async (data) =>
-  fs.writeFile("deployment-racheli-naama-ora/file.json", JSON.stringify(data));
+  fs.readFile("file.json").then((data) => JSON.parse(data));
+// const updateData = async (data) =>
+//   fs.writeFile('file.json', JSON.stringify(data));
 
-const login = async (email, password) => {
+const userlogin = async (email, password) => {
   const data = await getData();
-  const users=data.users;
+  const users = data.users;
   const _user = await users.find(
-    (user) => user.email === email && user.password === parseInt(password)
+    (user) => user.email == email && user.password == parseInt(password)
   );
-  if(!_user){
-    throw new Error(`user with these details not found`);
-  }
+  // if (_user) {
   return _user;
-  //   return await myData.find((u) => u.email === email && u.password === password);
+  // }
+  // throw new Error(`user with these details was not found`);
 };
-
+const managerlogin = async (email, password) => {
+  debugger
+  const data = await getData();
+  const manager = data.manager;
+  debugger
+  if (manager.password == password && manager.email == email) {
+    return manager;
+  }
+  return null;
+//  throw new Error(`manager with these details was not found`);
+};
 module.exports = {
-  login,
+  userlogin,
+  managerlogin,
+  // signUp
 };
